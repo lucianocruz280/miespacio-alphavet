@@ -22,8 +22,8 @@ const PetCreateView = () => {
 
   return (
     <main className="flex-1 min-w-0">
-      <div className="max-w-4xl">
-        {/* Header */}
+      <div className="max-w-5xl">
+        
         <div className="mb-6 sm:mb-8">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -43,7 +43,6 @@ const PetCreateView = () => {
         </div>
 
         <div className="space-y-6">
-          {/* Photo */}
           <Card className="p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
               <div className="relative shrink-0">
@@ -85,7 +84,6 @@ const PetCreateView = () => {
             </div>
           </Card>
 
-          {/* Información básica */}
           <Card>
             <CardHeader
               title="Información básica"
@@ -170,7 +168,6 @@ const PetCreateView = () => {
             </div>
           </Card>
 
-          {/* Detalles adicionales */}
           <Card>
             <CardHeader
               title="Detalles adicionales"
@@ -198,8 +195,6 @@ const PetCreateView = () => {
               </div>
             </div>
           </Card>
-
-          {/* Actions */}
           <div className="sticky bottom-4">
             <Card className="p-4 sm:p-5">
               <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
