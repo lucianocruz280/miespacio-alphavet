@@ -7,12 +7,8 @@ type ButtonVariant =
   | "success"
   | "warning"
 
-type ButtonProps = {
-  children: React.ReactNode
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant
-  className?: string
-  type?: "button" | "submit" | "reset"
-  disabled?: boolean
   fullWidth?: boolean
 }
 
