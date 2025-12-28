@@ -1,7 +1,11 @@
-import { Search } from "lucide-react";
+import { ChevronDown, LogOut, Search } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Header() {
+    const { data: session, status } = useSession()
+    const [open, setOpen] = useState(false)
     return (
         <header className="sticky top-0 z-50 bg-white border-b border-slate-200/80">
 
@@ -33,13 +37,55 @@ export default function Header() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-3">
-                    <button className="hidden lg:block px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 rounded-lg">
-                        Mis reservas
-                    </button>
-                    <button className="px-4 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm">
-                        Iniciar sesión / Registrarse
-                    </button>
+                <div className="flex items-center gap-3 relative">
+
+                    {status === 'loading' && (
+                        <div className="h-9 w-24 bg-slate-100 animate-pulse rounded-lg" />
+                    )}
+
+                    {status === 'unauthenticated' && (
+                        <Link
+                            href="/auth/signin"
+                            className="px-4 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm"
+                        >
+                            Iniciar sesión
+                        </Link>
+                    )}
+
+                    {status === 'authenticated' && (
+                        <div className="relative">
+                            <button
+                                onClick={() => setOpen(!open)}
+                                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-50"
+                            >
+                                <div className="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-sm font-semibold">
+                                    {session.user?.name?.charAt(0)}
+                                </div>
+                                <span className="text-sm font-medium text-slate-700">
+                                    {session.user?.name}
+                                </span>
+                                <ChevronDown className="w-4 h-4 text-slate-400" />
+                            </button>
+
+                            {open && (
+                                <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden">
+                                    <Link
+                                        href="/profile"
+                                        className="block px-4 py-2 text-sm hover:bg-slate-50"
+                                    >
+                                        Mi perfil
+                                    </Link>
+                                    <button
+                                        onClick={() => signOut({ callbackUrl: '/auth/signin' })}
+                                        className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-slate-50"
+                                    >
+                                        <LogOut className="w-4 h-4" />
+                                        Cerrar sesión
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </header>

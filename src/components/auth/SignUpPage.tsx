@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Mail, Lock, User, Quote, Loader } from 'lucide-react'

@@ -1,4 +1,3 @@
-'use client'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -8,6 +7,7 @@ import Card from '@/components/ui/Card'
 import Field from '@/components/ui/Field'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
+import { signIn } from 'next-auth/react'
 
 const LoginPage = () => {
   const router = useRouter()
@@ -17,35 +17,28 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
 
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        }
-      )
+    const res = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    })
 
-      const data = await res.json()
-
-      if (!data.success) {
-        throw new Error(data.message || 'Credenciales inválidas')
-      }
-
-      localStorage.setItem('token', data.data.token)
+    if (res?.error) {
+      setError('Credenciales inválidas')
+    } else {
       router.push('/')
-    } catch (err: any) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
     }
+
+    setLoading(false)
   }
+
 
   return (
     <main className="h-screen w-full flex overflow-hidden bg-white">
@@ -112,6 +105,10 @@ const LoginPage = () => {
               <Button type="submit" className="w-full">
                 {loading ? <Loader /> : "Iniciar Sesión"}
               </Button>
+              <Button onClick={() => signIn('google')}>
+                Continuar con Google
+              </Button>
+
             </form>
           </Card>
 
