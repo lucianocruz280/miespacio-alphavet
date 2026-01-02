@@ -1,7 +1,7 @@
 import PetCard from "./PetCard"
 import AddPetCard from "./AddPetCard"
 import useAxios from "@/hooks/useAxios"
-import { Pet } from "@/types/Pets"
+import { Pet, PetResponse } from "@/types/Pets"
 
 const getAgeYears = (birthDate?: string) => {
     if (!birthDate) return null
@@ -15,7 +15,7 @@ const getAgeYears = (birthDate?: string) => {
     return age
 }
 
-const buildMeta = (pet: any) => {
+export const buildMeta = (pet: any) => {
     const age = getAgeYears(pet.birthDate)
     return [
         pet.breed,
@@ -25,10 +25,7 @@ const buildMeta = (pet: any) => {
         .filter(Boolean)
         .join(" • ")
 }
-type PetResponse = {
-    success: boolean,
-    data: Pet[]
-}
+
 const PetsGrid = () => {
     const { data, loading } = useAxios({
         method: "get",

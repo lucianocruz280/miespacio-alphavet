@@ -16,3 +16,8 @@ export type Pet = {
   myRelationship: string
   isPrimaryOwner: boolean
 }
+
+export type PetResponse = {
+    success: boolean,
+    data: Pet[]
+}

@@ -7,6 +7,9 @@ type PetCardProps = {
   lastVisit: string
   imageUrl: string
   statusColor?: "emerald" | "amber"
+  selectable?: boolean
+  selected?: boolean
+  onSelect?: () => void
 }
 
 const PetCard = ({
@@ -15,11 +18,24 @@ const PetCard = ({
   lastVisit,
   imageUrl,
   statusColor,
+  selectable = false,
+  selected = false,
+  onSelect,
 }: PetCardProps) => {
   const router = useRouter()
+  const handleClick = () => {
+    if (selectable && onSelect) {
+      onSelect()
+      return
+    }
 
+    router.push("/pets/id")
+  }
   return (
-    <button onClick={() => router.push('/pets/id')} className="group relative cursor-pointer flex items-start gap-4 p-5 bg-white rounded-xl border border-slate-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)] hover:border-blue-400 hover:shadow-md transition-all text-left">
+    <button onClick={handleClick} className={`group relative cursor-pointer flex items-start gap-4 p-5 bg-white rounded-xl border border-slate-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)] hover:border-blue-400 hover:shadow-md transition-all text-left ${selected
+      ? "border-blue-600 ring-2 ring-blue-200 bg-blue-50"
+      : "bg-white border-slate-200 hover:border-blue-400 hover:shadow-md"
+      }`}>
       <div className="relative shrink-0">
         <img
           src={imageUrl}
