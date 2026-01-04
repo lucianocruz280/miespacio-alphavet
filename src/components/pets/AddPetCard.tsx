@@ -2,7 +2,7 @@ import { Plus } from "lucide-react"
 import { useRouter } from "next/router"
 import { FC } from "react"
 type Props = {
-  classNames: string
+  classNames?: string
 }
 const AddPetCard: FC<Props> = ({ classNames }) => {
   const router = useRouter()
