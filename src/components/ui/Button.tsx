@@ -19,6 +19,8 @@ const Button = ({
   type = "button",
   disabled = false,
   fullWidth = false,
+  onClick,
+  ...rest
 }: ButtonProps) => {
   const variants: Record<ButtonVariant, string> = {
     primary:
@@ -41,6 +43,8 @@ const Button = ({
     <button
       type={type}
       disabled={disabled}
+      onClick={onClick}
+      {...rest}
       className={clsx(
         "inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg shadow-sm transition-all cursor-pointer",
         "focus:outline-none focus:ring-2 focus:ring-offset-2",

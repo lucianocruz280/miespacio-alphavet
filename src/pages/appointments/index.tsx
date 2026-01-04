@@ -1,4 +1,5 @@
-import CreateAppointmentView from "@/components/appointments/create-appointments/CreateAppointment"
+
+import CreateAppointmentView from "@/components/appointments/CreateAppointmentView"
 import MainLayout from "@/components/layout/Layout"
 
 const Page = () => {

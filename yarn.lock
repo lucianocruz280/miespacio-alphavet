@@ -563,6 +563,18 @@
   resolved "https://registry.npmjs.org/@rtsao/scc/-/scc-1.1.0.tgz"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
+"@stepperize/core@1.2.7":
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/@stepperize/core/-/core-1.2.7.tgz#b26d07787c44468be823eb7d3684d2e1812efeb1"
+  integrity sha512-XiUwLZ0XRAfaDK6AzWVgqvI/BcrylyplhUXKO8vzgRw0FTmyMKHAAbQLDvU//ZJAqnmG2cSLZDSkcwLxU5zSYA==
+
+"@stepperize/react@^5.1.9":
+  version "5.1.9"
+  resolved "https://registry.yarnpkg.com/@stepperize/react/-/react-5.1.9.tgz#373833084fb3af97d3e42d1d1b51cfe19172d71f"
+  integrity sha512-yBgw1I5Tx6/qZB4xTdVBaPGfTqH5aYS1WFB5vtR8+fwPeqd3YNuOnQ1pJM6w/xV/gvryuy31hbFw080lZc+/hw==
+  dependencies:
+    "@stepperize/core" "1.2.7"
+
 "@swc/helpers@0.5.15":
   version "0.5.15"
   resolved "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.15.tgz"
