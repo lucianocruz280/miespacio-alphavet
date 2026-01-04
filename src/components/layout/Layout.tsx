@@ -15,13 +15,14 @@ const MainLayout: FC<Props> = ({ children }) => {
         max-w-[1600px] mx-auto px-4 lg:px-6 py-6
         flex flex-col lg:flex-row gap-6
       ">
+        <div className="hidden lg:block w-80 shrink-0">
+                    <Sidebar />
+                </div>
                 <div className="flex-1">
                     {children}
                 </div>
 
-                <div className="hidden lg:block w-80 shrink-0">
-                    <Sidebar />
-                </div>
+                
             </div>
         </div>
     )

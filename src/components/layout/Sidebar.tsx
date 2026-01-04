@@ -7,7 +7,7 @@ import SidebarSupport from "../sidebar/SidebarSupport"
 const Sidebar = () => {
     return (
         <aside className="w-full lg:w-80 shrink-0 space-y-6">
-            <SidebarSummary />
+            {/* <SidebarSummary /> */}
             <SidebarNavigation />
             <SidebarPromotions />
             <SidebarPackages />

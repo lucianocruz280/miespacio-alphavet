@@ -69,7 +69,7 @@ const CreateAppointmentView = () => {
       <div className="grid lg:grid-cols-12 gap-8 items-start">
 
         {/* LEFT COLUMN */}
-        <div className="lg:col-span-12 xl:col-span-12 space-y-8">
+        <div className="lg:col-span-7 xl:col-span-8 space-y-8">
 
           {/* PET SELECTION */}
           {true && (
@@ -123,7 +123,7 @@ const CreateAppointmentView = () => {
         </div>
 
    
-        {/* <div className="lg:col-span-5 xl:col-span-4 space-y-6">
+        <div className="lg:col-span-5 xl:col-span-4 space-y-6">
 
     
           <Card className="p-6">
@@ -139,7 +139,7 @@ const CreateAppointmentView = () => {
                   options={[
                     { value: "CONSULTA", label: "Consulta" },
                     { value: "VACUNACION", label: "Vacunación" },
-                    { value: "REVISION", label: "Revisión" },
+                    { value: "REVISION", label: "Revisión General" },
                     { value: "EMERGENCIA", label: "Emergencia" },
                   ]}
                 />
@@ -178,7 +178,7 @@ const CreateAppointmentView = () => {
               {error}
             </p>
           )}
-        </div> */}
+        </div>
       </div>
     </main>
   )

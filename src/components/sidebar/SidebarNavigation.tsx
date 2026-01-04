@@ -1,5 +1,5 @@
 import SidebarItem from "../ui/SidebarItem"
-import { PawPrint, LayoutList, Calendar } from "lucide-react"
+import { PawPrint, LayoutList, Calendar, Home } from "lucide-react"
 
 const SidebarNavigation = () => {
   return (
@@ -9,6 +9,7 @@ const SidebarNavigation = () => {
       </h3>
 
       <nav className="space-y-1">
+         <SidebarItem icon={Home} label="Inicio" href="/" />
         <SidebarItem icon={PawPrint} label="Mis Mascotas" href="/pets" />
         <SidebarItem icon={LayoutList} label="Mis Servicios" />
         <SidebarItem icon={Calendar} label="Mis Citas" />
