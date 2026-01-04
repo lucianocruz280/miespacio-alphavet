@@ -20,7 +20,7 @@ const PetSelector = ({ selectedPetId, onSelect }: Props) => {
                 {Array.from({ length: 3 }).map((_, i) => (
                     <div key={i} className="h-48 rounded-xl bg-slate-100 animate-pulse" />
                 ))}
-                <AddPetCard />
+                <AddPetCard classNames="" />
             </div>
         )
     }
@@ -50,7 +50,7 @@ const PetSelector = ({ selectedPetId, onSelect }: Props) => {
                 </button>
             ))}
 
-            <AddPetCard />
+            <AddPetCard classNames=""/>
         </div>
     )
 }
