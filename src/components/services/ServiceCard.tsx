@@ -1,5 +1,6 @@
 import { useServiceStore } from "@/store/useServiceStore";
 import { LucideIcon } from "lucide-react";
+import { useRouter } from "next/router";
 
 type Props = {
     title: string;
@@ -16,14 +17,18 @@ export default function ServiceCard({
     price,
     icon: Icon,
 }: Props) {
-    const selectService = useServiceStore((s) => s.selectService)
+    // const selectService = useServiceStore((s) => s.selectService)
+    const router = useRouter()
+    const selectService = ({}) => {
+        router.push("/appointments")
+    }
     return (
 
         <button
             onClick={() =>
                 selectService({ title, duration, price })
             }
-            className="group flex flex-col p-4 md:p-6 bg-white border border-slate-200 rounded-xl hover:border-blue-400 hover:shadow-md transition-all text-left ">
+            className="group cursor-pointer flex flex-col p-4 md:p-6 bg-white border border-slate-200 rounded-xl hover:border-blue-400 hover:shadow-md transition-all text-left ">
             <div className="flex gap-4 mb-4">
                 <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center group-hover:bg-blue-100">
                     <Icon className="w-6 h-6 text-blue-600" />

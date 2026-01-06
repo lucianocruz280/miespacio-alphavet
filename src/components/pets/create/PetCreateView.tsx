@@ -45,7 +45,7 @@ const PetCreateView = () => {
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
 
   const [saving, setSaving] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<Record<string, string>>({})
 
   const update = (key: string, value: any) =>
     setForm((prev) => ({ ...prev, [key]: value }))
@@ -64,12 +64,22 @@ const PetCreateView = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true)
-    setError(null)
+    setError({})
 
     try {
-      if (!form.name || !speciesId || !breedId) {
-        throw new Error("Completa los campos obligatorios")
+      const errors: Record<string, string> = {}
+
+      if (!form.name) errors.name = "El nombre es obligatorio"
+      if (!speciesId) errors.species = "Selecciona una especie"
+      if (!breedId) errors.breed = "Selecciona una raza"
+      if (!gender) errors.gender = "Por favor, selecciona un género"
+
+      if (Object.keys(errors).length > 0) {
+        setError(errors)
+        setSaving(false)
+        return
       }
+      console.log("errors", error)
 
       await api.post("/pets", {
         name: form.name,
@@ -159,7 +169,7 @@ const PetCreateView = () => {
         <Card>
           <CardHeader title="Información básica" />
           <div className="p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <Field label="Nombre" required>
+            <Field label="Nombre" required error={error?.name || "Error"}>
               <Input
                 placeholder="Ej. Bruno"
                 value={form.name}
@@ -167,7 +177,7 @@ const PetCreateView = () => {
               />
             </Field>
 
-            <Field label="Especie" required>
+            <Field label="Especie" required error={error?.species}>
               <SelectCreatable
                 value={speciesId}
                 options={species}
@@ -182,7 +192,7 @@ const PetCreateView = () => {
               />
             </Field>
 
-            <Field label="Raza" required>
+            <Field label="Raza" required error={error?.breed}>
               <SelectCreatable
                 value={breedId}
                 options={breeds}
@@ -202,9 +212,10 @@ const PetCreateView = () => {
               />
             </Field>
 
-            <Field label="Sexo">
+            <Field label="Sexo" error={error?.gender || "error"}>
               <Select
                 value={genderId}
+
                 onChange={(e) => {
                   const selected = genderOptions.find((s) => s.value == e.target.value)
                   setGenderId(e.target.value)
@@ -262,7 +273,7 @@ const PetCreateView = () => {
           </div>
         </Card>
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {/* {error && <p className="text-sm text-red-600">{error}</p>} */}
 
         <div className="sticky bottom-4">
           <Card className="p-4 sm:p-5">
