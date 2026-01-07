@@ -1,8 +1,10 @@
 'use client'
 
 import { LucideHeart, LucideShieldCheck, LucideSparkles } from 'lucide-react'
+import { useRouter } from 'next/router'
 
 const ModernHero = () => {
+    const router = useRouter()
     return (
         <section className="relative min-h-[90vh] flex items-center pt-24 pb-16 overflow-hidden">
             {/* Background elements */}
@@ -26,7 +28,7 @@ const ModernHero = () => {
                     </p>
                     
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                        <button className="px-8 py-4 rounded-2xl bg-primary text-white font-semibold transition-all hover:bg-primary-700 hover:shadow-xl hover:shadow-primary-200 active:scale-95">
+                        <button onClick={() => router.push('/auth/signin')} className="px-8 py-4 rounded-2xl bg-primary text-white font-semibold transition-all hover:bg-primary-700 hover:shadow-xl hover:shadow-primary-200 active:scale-95">
                             Agendar Cita Ahora
                         </button>
                         <button className="px-8 py-4 rounded-2xl bg-white border border-slate-200 text-slate-700 font-semibold transition-all hover:bg-slate-50 hover:border-slate-300 active:scale-95">
