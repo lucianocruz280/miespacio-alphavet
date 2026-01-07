@@ -14,42 +14,36 @@ const HomeComponent = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
 
           <ServiceCard
-            title="Consulta veterinaria"
+            title="Hospital"
             description="Revisión general, diagnóstico y tratamiento."
             duration="30–45 min"
             price="$350 MXN"
             icon={Stethoscope}
           />
           <ServiceCard
-            title="Peluquería y estética"
+            title="Estética"
             description="Baño, corte, uñas y spa."
             duration="60–90 min"
             price="$450 MXN"
             icon={Scissors}
           />
           <ServiceCard
-            title="Hospitalización"
-            description="Ingreso y monitoreo."
+            title="Farmacia"
+            description="Medicamentos y prenscripciones"
             duration="por día"
             price="$900 MXN"
             icon={BriefcaseMedical}
           />
           <ServiceCard
-            title="Hotel y guardería"
-            description="Hospedaje seguro."
+            title="Tienda en línea"
+            description="Croquetas, juguetes, jaulas."
             duration="por noche"
             price="$600 MXN"
             icon={Hotel}
           />
+       
           <ServiceCard
-            title="Transporte"
-            description="Pet taxi o ambulancia."
-            duration="30–60 min"
-            price="$250 MXN"
-            icon={Car}
-          />
-          <ServiceCard
-            title="Funeraria y crematorio"
+            title="Crematorio"
             description="Acompañamiento digno."
             duration="60–120 min"
             price="$1,200 MXN"
