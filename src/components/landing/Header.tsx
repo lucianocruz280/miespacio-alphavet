@@ -1,24 +1,32 @@
+import Link from 'next/link'
+
 const Header = () => {
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
-            <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold">
-                        V
+        <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-primary-50/20">
+            <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold shadow-lg shadow-primary-200">
+                        <span className="text-xl">A</span>
                     </div>
-                    <span className="text-lg font-semibold text-slate-900">Alphavet</span>
+                    <span className="text-2xl font-bold text-slate-900 tracking-tight">
+                        Alpha<span className="text-primary">vet</span>
+                    </span>
                 </div>
 
-                <nav className="hidden md:flex items-center gap-8">
-                    <a href="#servicios" className="text-sm text-slate-500 hover:text-blue-600">Servicios</a>
-                    <a href="#precios" className="text-sm text-slate-500 hover:text-blue-600">Precios</a>
-                    <a href="#testimonios" className="text-sm text-slate-500 hover:text-blue-600">Testimonios</a>
-                    <a href="#contacto" className="text-sm text-slate-500 hover:text-blue-600">Contacto</a>
+                <nav className="hidden md:flex items-center gap-10">
+                    <a href="#servicios" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors">Servicios</a>
+                    <a href="#nosotros" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors">Nosotros</a>
+                    <a href="#precios" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors">Precios</a>
+                    <a href="#contacto" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors">Contacto</a>
                 </nav>
 
-                <div className="hidden md:flex gap-3">
-                    <a href="/auth/signin" className="text-sm px-3 py-2 text-slate-600 hover:text-slate-900">Iniciar sesión</a>
-                    <a href="/auth/signup" className="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm">Registrarse</a>
+                <div className="hidden md:flex items-center gap-4">
+                    <Link href="/auth/signin" className="text-sm font-semibold text-slate-600 hover:text-primary transition-colors px-4 py-2">
+                        Acceso
+                    </Link>
+                    <Link href="/auth/signup" className="bg-primary text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-md shadow-primary-100 hover:shadow-lg hover:shadow-primary-200 transition-all active:scale-95">
+                        Registrarse
+                    </Link>
                 </div>
             </div>
         </header>
@@ -26,3 +34,4 @@ const Header = () => {
 }
 
 export default Header
+
