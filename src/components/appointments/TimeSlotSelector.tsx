@@ -1,21 +1,42 @@
+import useAxios from "@/hooks/useAxios"
+
 type TimeSlotSelectorProps = {
   date: string
   selectedTime?: string
   onSelect: (time: string) => void
 }
 
-const TIMES = [
-  "09:00 AM",
-  "09:30 AM",
-  "10:00 AM",
-  "10:30 AM",
-  "11:00 AM",
-]
+type Schedule = {
+  success: boolean;
+  data: string[]
+}
 
 const TimeSlotSelector = ({
+  date,
   selectedTime,
   onSelect,
 }: TimeSlotSelectorProps) => {
+  const { data, loading } = useAxios<Schedule>({
+    method: "get",
+    url: "/appointments/available-slots",
+    params: { date },
+    skip: !date,
+  }, [date])
+
+  const times: string[] = data?.data ?? []
+  console.log(data, date)
+  if (loading) {
+    return <p className="text-sm text-slate-500">Cargando horarios…</p>
+  }
+
+  if (!times.length) {
+    return (
+      <p className="text-sm text-slate-500">
+        No hay horarios disponibles para este día
+      </p>
+    )
+  }
+
   return (
     <div>
       <h3 className="text-sm font-medium text-slate-900 mb-4">
@@ -23,7 +44,7 @@ const TimeSlotSelector = ({
       </h3>
 
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
-        {TIMES.map((time) => {
+        {times.map((time) => {
           const isSelected = selectedTime === time
 
           return (
