@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 const slides = [
   {
-    backgroundImage: '/images/landing/spa.png',
+    backgroundImage: '/images/landing/spa.webp',
     badge: 'Spa & Bienestar',
     title: <>Cuidado y Confort<br />para tu Mascota</>,
     description:
@@ -16,7 +16,7 @@ const slides = [
     secondaryCta: 'Ver servicios',
   },
   {
-    backgroundImage: '/images/landing/medical.jpg',
+    backgroundImage: '/images/landing/medical.webp',
     badge: 'Clínica Veterinaria',
     title: <>Atención Médica<br />Profesional</>,
     description:
@@ -25,7 +25,7 @@ const slides = [
     secondaryCta: 'Conocer clínica',
   },
   {
-    backgroundImage: '/images/landing/hospitalizacion.avif',
+    backgroundImage: '/images/landing/hospitalizacion.webp',
     badge: 'Hospital 24/7',
     title: <>Cuidado Crítico<br />Todo el Día</>,
     description:
@@ -34,7 +34,7 @@ const slides = [
     secondaryCta: 'Ver instalaciones',
   },
   {
-    backgroundImage: '/images/landing/farmacia1.jpg',
+    backgroundImage: '/images/landing/farmacia1.webp',
     badge: 'Farmacia Veterinaria',
     title: <>Medicamentos<br />Especializados</>,
     description:
@@ -42,7 +42,7 @@ const slides = [
     primaryCta: 'Ver farmacia',
   },
   {
-    backgroundImage: '/images/landing/surgery.avif',
+    backgroundImage: '/images/landing/surgery.webp',
     badge: 'Cirugías',
     title: <>Procedimientos<br />Seguros</>,
     description:
@@ -50,7 +50,7 @@ const slides = [
     primaryCta: 'Agendar valoración',
   },
   {
-    backgroundImage: '/images/landing/crematorio.avif',
+    backgroundImage: '/images/landing/crematorio.webp',
     badge: 'Crematorio',
     title: <>Despedidas<br />Dignas</>,
     description:
@@ -58,7 +58,7 @@ const slides = [
     primaryCta: 'Conocer servicio',
   },
   {
-    backgroundImage: '/images/landing/ecommerce.png',
+    backgroundImage: '/images/landing/ecommerce.webp',
     badge: 'Tienda en Línea',
     title: <>Todo para tu Mascota<br />En un Solo Lugar</>,
     description:
