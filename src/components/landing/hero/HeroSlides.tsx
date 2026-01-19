@@ -1,5 +1,3 @@
-'use client'
-
 import { motion, Variants } from 'framer-motion'
 
 type HeroSlideProps = {
@@ -33,7 +31,6 @@ const item: Variants = {
     },
 }
 
-
 const HeroSlide = ({
     backgroundImage,
     badge,
@@ -44,8 +41,6 @@ const HeroSlide = ({
 }: HeroSlideProps) => {
     return (
         <section className="relative min-h-[100svh] md:h-screen w-full overflow-hidden">
-
-            {/* Background parallax */}
             <motion.div
                 className="absolute inset-0 bg-cover bg-center scale-110"
                 style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -57,51 +52,85 @@ const HeroSlide = ({
                 }}
             />
 
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent md:bg-gradient-to-r md:from-[#283c47]/90 md:via-[#283c47]/80 md:to-transparent" />
 
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#283c47]/90 via-[#283c47]/80 to-transparent" />
-
-            {/* Content */}
             <motion.div
-                className="relative z-10 flex h-full items-center px-5 sm:px-8 md:px-20 lg:px-40"
-
+                className="
+                    md:relative absolute z-10 flex h-full
+                    items-end md:items-center
+                    px-4 sm:px-6 md:px-20 lg:px-40
+                    pb-32 md:pb-0
+                    "
                 variants={container}
                 initial="hidden"
                 animate="show"
             >
                 <div className="max-w-[1280px] w-full mx-auto">
-                    <div className="max-w-2xl flex flex-col gap-6 text-white">
+                    <div className="max-w-xl mx-auto md:mx-0 flex flex-col gap-5 text-white text-center md:text-left">
                         <motion.span
                             variants={item}
-                            className="inline-flex w-fit items-center rounded-md bg-white/10 px-3 py-1 backdrop-blur-sm border border-white/20 text-xs font-bold uppercase tracking-widest"
+                            className="
+                inline-flex mx-auto md:mx-0 w-fit items-center
+                rounded-md bg-white/10 px-3 py-1
+                backdrop-blur-sm border border-white/20
+                text-[11px] sm:text-xs font-bold uppercase tracking-widest
+              "
                         >
                             {badge}
                         </motion.span>
 
                         <motion.h1
                             variants={item}
-                            className="text-5xl md:text-7xl font-extrabold leading-[1.1] tracking-tight"
+                            className="
+                font-extrabold tracking-tight leading-tight
+                text-4xl sm:text-5xl md:text-7xl
+              "
                         >
                             {title}
                         </motion.h1>
 
                         <motion.p
                             variants={item}
-                            className="text-white/80 text-lg md:text-xl leading-relaxed max-w-lg"
+                            className="
+                text-white/90 leading-relaxed
+                text-base sm:text-lg md:text-xl
+                max-w-md mx-auto md:mx-0
+              "
                         >
                             {description}
                         </motion.p>
 
                         <motion.div
                             variants={item}
-                            className="flex flex-wrap gap-4 mt-4"
+                            className="
+                flex flex-col sm:flex-row gap-3 sm:gap-4
+                mt-2
+                w-full sm:justify-center md:justify-start
+              "
                         >
-                            <button className="min-w-[180px] h-14 px-8 rounded-lg bg-[#283c47] text-white text-base font-bold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition">
+                            <button
+                                className="
+                  w-full sm:min-w-[180px] h-12 sm:h-14 px-6 sm:px-8
+                  rounded-lg bg-[#283c47]
+                  text-white text-sm sm:text-base font-bold
+                  shadow-lg transition
+                  hover:scale-[1.02] active:scale-[0.98]
+                "
+                            >
                                 {primaryCta}
                             </button>
 
                             {secondaryCta && (
-                                <button className="min-w-[180px] h-14 px-8 rounded-lg border-2 border-white/30 bg-white/5 backdrop-blur-sm text-white text-base font-bold hover:bg-white/10 hover:border-white/50 transition">
+                                <button
+                                    className="
+                    w-full sm:min-w-[180px] h-12 sm:h-14 px-6 sm:px-8
+                    rounded-lg border-2 border-white/30
+                    bg-white/5 backdrop-blur-sm
+                    text-white text-sm sm:text-base font-bold
+                    hover:bg-white/10 hover:border-white/50
+                    transition
+                  "
+                                >
                                     {secondaryCta}
                                 </button>
                             )}

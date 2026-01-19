@@ -85,8 +85,17 @@ const HeroSlider = () => {
   }, [])
 
   return (
-    <div className="relative">
-      <div className="relative h-screen overflow-hidden bg-[#283c47]">
+    <section
+      id="hero"
+      className="relative overflow-hidden"
+    >
+      <div
+        className="
+          relative
+          h-[100svh] md:h-screen
+          bg-[#283c47]
+        "
+      >
         <AnimatePresence>
           <motion.div
             key={current}
@@ -94,42 +103,53 @@ const HeroSlider = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1, ease: 'easeInOut' }}
+            transition={{ duration: 1, ease: "easeInOut" }}
           >
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent md:hidden z-10" />
+
             <HeroSlide {...slides[current]} />
           </motion.div>
         </AnimatePresence>
       </div>
 
-
-
-      {/* Arrows */}
       <button
         onClick={prev}
-        className="absolute left-6 top-1/2 -translate-y-1/2 flex justify-center items-center z-20 w-12 h-12 rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20 transition cursor-pointer"
+        className=" hidden md:flex items-center justify-center absolute left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20 transition "
       >
         <ArrowLeft />
       </button>
 
       <button
         onClick={next}
-        className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex justify-center items-center rounded-full bg-gray-400 text-white backdrop-blur hover:bg-white/20 transition cursor-pointer"
+        className=" hidden md:flex items-center justify-center absolute right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20 transition "
       >
         <ArrowRight />
       </button>
 
-      {/* Dots */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+      <div
+        className="
+          absolute
+          bottom-24 md:bottom-10
+          left-1/2 -translate-x-1/2
+          flex gap-3 z-20
+        "
+      >
         {slides.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`h-2 rounded-full transition-all ${current === i ? 'w-8 bg-white' : 'w-2 bg-white/40'
-              }`}
+            className={`
+              rounded-full transition-all
+              h-2 md:h-2
+              ${current === i
+                ? "w-8 bg-white"
+                : "w-3 bg-white/40 hover:bg-white/70"}
+            `}
+            aria-label={`Slide ${i + 1}`}
           />
         ))}
       </div>
-    </div>
+    </section>
   )
 }
 
