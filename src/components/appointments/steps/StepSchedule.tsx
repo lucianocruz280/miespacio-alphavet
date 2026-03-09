@@ -2,11 +2,21 @@ import CalendarSelector from "../CalendarSelector"
 import TimeSlotSelector from "../TimeSlotSelector"
 import Button from "@/components/ui/Button"
 import VeterinarianSelector from "../VeterinarianSelector"
+import useAxios from "@/hooks/useAxios"
 
 type AppointmentDraft = {
+  branchId?: string
   date?: string
   time?: string
   vetId?: string
+}
+
+type DoctorResponse = {
+  user: {
+    id: string
+    name: string
+    avatarUrl?: string
+  }
 }
 
 type StepScheduleProps = {
@@ -22,7 +32,30 @@ const StepSchedule = ({
   onNext,
   onPrev,
 }: StepScheduleProps) => {
+
   const canContinue = !!draft.date && !!draft.time
+
+  const { data: doctors } = useAxios<DoctorResponse[]>(
+    {
+      method: "get",
+      url: `branches/${draft.branchId}/doctors`,
+      skip: !draft.branchId
+    },
+    [draft.branchId]
+  )
+
+  const vets = (doctors ?? []).map((doc) => ({
+    id: doc.user.id,
+    name: doc.user.name,
+    avatarUrl: doc.user.avatarUrl
+  }))
+
+  const handleVetSelect = (vetId?: string) => {
+    onChange({
+      vetId,
+      time: undefined
+    })
+  }
 
   return (
     <section className="space-y-10">
@@ -36,9 +69,17 @@ const StepSchedule = ({
         </p>
       </div>
 
+      {/* ================= DOCTOR ================= */}
+
+      <VeterinarianSelector
+        vets={vets}
+        selectedVetId={draft.vetId}
+        onSelect={handleVetSelect}
+      />
+
+      {/* ================= MOBILE ================= */}
 
       <div className="block md:hidden space-y-4">
-
 
         <details open={!draft.date} className="bg-white rounded-xl border">
           <summary className="cursor-pointer px-4 py-3 font-medium">
@@ -60,7 +101,6 @@ const StepSchedule = ({
           </div>
         </details>
 
-
         {draft.date && (
           <details open={!draft.time} className="bg-white rounded-xl border">
             <summary className="cursor-pointer px-4 py-3 font-medium">
@@ -74,16 +114,22 @@ const StepSchedule = ({
 
             <div className="p-4">
               <TimeSlotSelector
+                branchId={draft.branchId!}
                 date={draft.date}
+                veterinarianId={draft.vetId}
                 selectedTime={draft.time}
                 onSelect={(time) => onChange({ time })}
               />
             </div>
           </details>
         )}
+
       </div>
 
+      {/* ================= DESKTOP ================= */}
+
       <div className="hidden md:grid md:grid-cols-2 gap-8">
+
         <CalendarSelector
           selectedDate={draft.date}
           onSelect={(date) => {
@@ -93,27 +139,17 @@ const StepSchedule = ({
 
         {draft.date && (
           <TimeSlotSelector
+            branchId={draft.branchId!}
             date={draft.date}
+            veterinarianId={draft.vetId}
             selectedTime={draft.time}
             onSelect={(time) => onChange({ time })}
           />
         )}
 
-
       </div>
-      <VeterinarianSelector
-        vets={[
-          {
-            id: "any",
-            name: "Dr. Roberto Sánchez",
-            specialty: "Medicina General",
-            avatarUrl:
-              "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=100&q=80",
-          },
-        ]}
-        selectedVetId={draft.vetId}
-        onSelect={(vetId) => onChange({ vetId })}
-      />
+
+      {/* ================= FOOTER ================= */}
 
       <div className="pt-6 border-t border-slate-100 flex justify-between">
         <Button variant="ghost" onClick={onPrev}>

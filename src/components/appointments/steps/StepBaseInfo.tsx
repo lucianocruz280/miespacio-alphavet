@@ -21,10 +21,18 @@ type StepBaseInfoProps = {
 }
 
 const StepBaseInfo = ({ draft, onChange, onNext }: StepBaseInfoProps) => {
-  const { data, loading } = useAxios({ method: "get", url: "/pets" })
+  const { data, loading } = useAxios({ method: "get", url: "pets" })
   const pets = (data as PetResponse)?.data ?? []
   const [mobileStage, setMobileStage] = useState<"PET" | "BRANCH" | "SERVICE">("PET")
+  const { data: modulesData } = useAxios({
+    method: "get",
+    url: "app-modules",
+  })
 
+  const hospitalModule = (modulesData as any[])?.find(
+    (app) => app.code === "HOSPITAL"
+  )
+  const hospitalBranches = hospitalModule?.branches ?? []
   const isMobile = true
   const canContinue =
     !!draft.petId &&
@@ -135,23 +143,19 @@ const StepBaseInfo = ({ draft, onChange, onNext }: StepBaseInfoProps) => {
             <h2 className="text-sm font-medium text-slate-900">Sucursal</h2>
 
             <div className="grid gap-4">
-              <BranchCard
-                id="central"
-                name="Clínica Central"
-                address="Av. Principal 123"
-                status="open"
-                selected={draft.branchId === "central"}
-                onSelect={() => handleBranchSelect("central")}
-              />
-
-              <BranchCard
-                id="north"
-                name="Sucursal Norte"
-                address="Calle Los Pinos 45"
-                status="closing"
-                selected={draft.branchId === "north"}
-                onSelect={() => handleBranchSelect("north")}
-              />
+              <div className="grid md:grid-cols-2 gap-4">
+                {hospitalBranches.map((branch: any) => (
+                  <BranchCard
+                    key={branch.id}
+                    id={branch.id}
+                    name={branch.name}
+                    address={`${branch.street} ${branch.exteriorNumber}`}
+                    status="open"
+                    selected={draft.branchId === branch.id}
+                    onSelect={() => onChange({ branchId: branch.id })}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -164,23 +168,19 @@ const StepBaseInfo = ({ draft, onChange, onNext }: StepBaseInfoProps) => {
         </h2>
 
         <div className="grid md:grid-cols-2 gap-4">
-          <BranchCard
-            id="central"
-            name="Clínica Central"
-            address="Av. Principal 123"
-            status="open"
-            selected={draft.branchId === "central"}
-            onSelect={() => onChange({ branchId: "central" })}
-          />
-
-          <BranchCard
-            id="north"
-            name="Sucursal Norte"
-            address="Calle Los Pinos 45"
-            status="closing"
-            selected={draft.branchId === "north"}
-            onSelect={() => onChange({ branchId: "north" })}
-          />
+          <div className="grid md:grid-cols-2 gap-4">
+            {hospitalBranches.map((branch: any) => (
+              <BranchCard
+                key={branch.id}
+                id={branch.id}
+                name={branch.name}
+                address={`${branch.street} ${branch.exteriorNumber}`}
+                status="open"
+                selected={draft.branchId === branch.id}
+                onSelect={() => onChange({ branchId: branch.id })}
+              />
+            ))}
+          </div>
         </div>
       </div>
 

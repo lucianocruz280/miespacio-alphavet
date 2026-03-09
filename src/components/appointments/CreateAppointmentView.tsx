@@ -7,7 +7,7 @@ import StepSchedule from "./steps/StepSchedule"
 import StepExtras from "./steps/StepExtras"
 import StepPayment from "./steps/StepPayment"
 import { AppointmentDraft } from "@/types/appointments"
-
+import api from "@/lib/axios"
 
 
 const CreateAppointmentView = () => {
@@ -79,8 +79,29 @@ const CreateAppointmentView = () => {
                     draft={draft}
                     onChange={updateDraft}
                     onPrev={stepper.prev}
-                    onConfirm={() => {
-                        console.log("FINAL DRAFT ", draft)
+                    onConfirm={async () => {
+
+                        try {
+
+                            const payload = {
+                                petId: draft.petId,
+                                branchId: draft.branchId,
+                                type: draft.serviceType,
+                                reason: draft.serviceType,
+                                veterinarianId: draft.vetId ?? undefined,
+                                scheduledDate: `${draft.date}T${draft.time}:00Z`
+                            }
+
+                            const res = await api.post("/appointments", payload)
+
+                            return res.data
+
+                        } catch (error) {
+
+                            console.error(error)
+
+                            throw error
+                        }
 
                     }}
                 />

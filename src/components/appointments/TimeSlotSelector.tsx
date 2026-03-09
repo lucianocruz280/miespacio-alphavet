@@ -1,11 +1,12 @@
 import useAxios from "@/hooks/useAxios"
 
 type TimeSlotSelectorProps = {
+  branchId: string
   date: string
+  veterinarianId?: string
   selectedTime?: string
   onSelect: (time: string) => void
 }
-
 type Schedule = {
   success: boolean;
   data: string[]
@@ -15,14 +16,19 @@ const TimeSlotSelector = ({
   date,
   selectedTime,
   onSelect,
+  branchId,
+  veterinarianId
 }: TimeSlotSelectorProps) => {
   const { data, loading } = useAxios<Schedule>({
     method: "get",
-    url: "/appointments/available-slots",
-    params: { date },
-    skip: !date,
-  }, [date])
-
+    url: "appointments/public-available-slots",
+    params: {
+      branchId,
+      date,
+      veterinarianId
+    },
+    skip: !branchId || !date
+  }, [branchId, date, veterinarianId])
   const times: string[] = data?.data ?? []
   console.log(data, date)
   if (loading) {
