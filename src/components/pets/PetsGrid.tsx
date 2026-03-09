@@ -54,6 +54,7 @@ const PetsGrid = () => {
             {pets.map((pet: any) => (
                 <PetCard
                     key={pet.id}
+                    id={pet.id}
                     name={pet.name}
                     meta={buildMeta(pet)}
                     lastVisit="—"

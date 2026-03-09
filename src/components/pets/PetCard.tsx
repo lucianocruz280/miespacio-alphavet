@@ -2,6 +2,7 @@ import { Calendar, ArrowRight } from "lucide-react"
 import { useRouter } from "next/router"
 
 type PetCardProps = {
+  id: string
   name: string
   meta: string
   lastVisit: string
@@ -13,6 +14,7 @@ type PetCardProps = {
 }
 
 const PetCard = ({
+  id,
   name,
   meta,
   lastVisit,
@@ -29,7 +31,7 @@ const PetCard = ({
       return
     }
 
-    router.push("/pets/id")
+    router.push(`/pets/${id}`)
   }
   return (
     <button onClick={handleClick} className={`group w-full h-full relative cursor-pointer flex items-start gap-4 p-5 bg-white rounded-xl border border-slate-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)] hover:border-blue-400 hover:shadow-md transition-all text-left ${selected

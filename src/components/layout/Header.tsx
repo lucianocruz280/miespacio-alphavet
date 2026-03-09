@@ -71,7 +71,7 @@ export default function Header() {
                                 <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden">
                                     <Link
                                         href="/profile"
-                                        className="block px-4 py-2 text-sm hover:bg-slate-50"
+                                        className="block px-4 py-2 text-sm hover:bg-slate-50 text-black"
                                     >
                                         Mi perfil
                                     </Link>
