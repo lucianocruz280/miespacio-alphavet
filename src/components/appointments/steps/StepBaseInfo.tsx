@@ -152,7 +152,7 @@ const StepBaseInfo = ({ draft, onChange, onNext }: StepBaseInfoProps) => {
                     address={`${branch.street} ${branch.exteriorNumber}`}
                     status="open"
                     selected={draft.branchId === branch.id}
-                    onSelect={() => onChange({ branchId: branch.id })}
+                    onSelect={() => handleBranchSelect(branch.id)}
                   />
                 ))}
               </div>
