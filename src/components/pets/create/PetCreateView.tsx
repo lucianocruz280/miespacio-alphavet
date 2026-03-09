@@ -34,7 +34,7 @@ const PetCreateView = () => {
   const [gender, setGender] = useState("")
   const [form, setForm] = useState({
     name: "",
-    birthDate: "",
+    age: "",
     color: "",
     weight: "",
     microchip: "",
@@ -46,19 +46,49 @@ const PetCreateView = () => {
 
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<Record<string, string>>({})
+  const [uploading, setUploading] = useState(false)
 
   const update = (key: string, value: any) =>
     setForm((prev) => ({ ...prev, [key]: value }))
 
 
-  const uploadPetPhoto = async (_file: File): Promise<string> => {
-    return "https://placehold.co/400x400?text=Pet+Photo"
+  const uploadPetPhoto = async (file: File): Promise<string> => {
+
+    const formData = new FormData()
+    formData.append("file", file)
+
+    const res = await api.post("/pets/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+
+    return res.data.url
   }
 
+
   const handlePhotoChange = async (file: File) => {
+
+    setUploading(true)
+
+    // preview inmediato
     setPhotoPreview(URL.createObjectURL(file))
-    const url = await uploadPetPhoto(file)
-    setPhotoUrl(url)
+
+    try {
+
+      const url = await uploadPetPhoto(file)
+
+      setPhotoUrl(url)
+
+    } catch (error) {
+
+      console.error("Error subiendo imagen", error)
+
+    } finally {
+
+      setUploading(false)
+
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -86,7 +116,7 @@ const PetCreateView = () => {
         species: speciesName,
         breed: breedName,
         gender: gender,
-        birthDate: form.birthDate || null,
+        age: form.age || null,
         color: form.color || null,
         weight: form.weight ? Number(form.weight) : null,
         microchip: form.microchip || null,
@@ -128,7 +158,8 @@ const PetCreateView = () => {
         <Card className="p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
             <div className="relative shrink-0">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center overflow-hidden">
+              <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center overflow-hidden">
+
                 {photoPreview ? (
                   <img
                     src={photoPreview}
@@ -138,6 +169,13 @@ const PetCreateView = () => {
                 ) : (
                   <Camera className="w-6 h-6 text-slate-400" />
                 )}
+
+                {uploading && (
+                  <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/70 backdrop-blur-sm">
+                    <span className="text-xs text-slate-600">Subiendo...</span>
+                  </div>
+                )}
+
               </div>
 
               <label className="absolute -bottom-1 -right-1 rounded-full bg-white border border-slate-200 shadow-sm p-2 hover:bg-slate-50 transition cursor-pointer">
@@ -169,7 +207,7 @@ const PetCreateView = () => {
         <Card>
           <CardHeader title="Información básica" />
           <div className="p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <Field label="Nombre" required error={error?.name || "Error"}>
+            <Field label="Nombre" required error={error?.name}>
               <Input
                 placeholder="Ej. Bruno"
                 value={form.name}
@@ -178,41 +216,36 @@ const PetCreateView = () => {
             </Field>
 
             <Field label="Especie" required error={error?.species}>
-              <SelectCreatable
+              <Select
                 value={speciesId}
                 options={species}
-                placeholder={speciesLoading ? "Cargando..." : "Selecciona una especie"}
-                onChange={(value) => {
+                onChange={(e) => {
+                  const value = e.target.value
                   const selected = species.find((s) => s.value === value)
+                  console.log("speciesId", speciesId)
                   setSpeciesId(value)
                   setSpeciesName(selected?.label || "")
                   setBreedId("")
                 }}
-                onCreate={createSpecies}
               />
             </Field>
 
             <Field label="Raza" required error={error?.breed}>
-              <SelectCreatable
+              <Select
                 value={breedId}
                 options={breeds}
-                placeholder={
-                  !speciesId
-                    ? "Primero selecciona una especie"
-                    : breedsLoading
-                      ? "Cargando razas..."
-                      : "Selecciona una raza"
-                }
-                onChange={(value) => {
-                  const selected = breeds.find((s) => s.value == value)
+                disabled={!speciesId || breedsLoading}
+                onChange={(e) => {
+                  const value = e.target.value
+                  const selected = breeds.find((b) => b.value === value)
+
                   setBreedId(value)
                   setBreedName(selected?.label || "")
                 }}
-                onCreate={createBreed}
               />
             </Field>
 
-            <Field label="Sexo" error={error?.gender || "error"}>
+            <Field label="Sexo" error={error?.gender}>
               <Select
                 value={genderId}
 
@@ -225,11 +258,14 @@ const PetCreateView = () => {
               />
             </Field>
 
-            <Field label="Fecha de nacimiento">
+            <Field label="Edad (años)">
               <Input
-                type="date"
-                value={form.birthDate}
-                onChange={(e) => update("birthDate", e.target.value)}
+                type="number"
+                min="0"
+                max="40"
+                placeholder="Ej. 2"
+                value={form.age}
+                onChange={(e) => update("age", e.target.value)}
               />
             </Field>
 

@@ -1,5 +1,6 @@
 import { Plus, Check, X } from "lucide-react"
 import { useState } from "react"
+import clsx from "clsx"
 import Button from "./Button"
 
 type Option = {
@@ -25,6 +26,8 @@ const SelectCreatable = ({
   const [isCreating, setIsCreating] = useState(false)
   const [newValue, setNewValue] = useState("")
 
+  const isPlaceholder = !value || value === ""
+
   if (isCreating) {
     return (
       <div className="flex gap-2">
@@ -39,7 +42,9 @@ const SelectCreatable = ({
           variant="primary"
           onClick={async () => {
             if (!newValue.trim()) return
+
             await onCreate?.(newValue)
+
             setNewValue("")
             setIsCreating(false)
           }}
@@ -69,11 +74,18 @@ const SelectCreatable = ({
             setIsCreating(true)
             return
           }
+
           onChange?.(e.target.value)
         }}
-        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary-500"
+        className={clsx(
+          "w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm transition",
+          isPlaceholder ? "text-slate-400" : "text-slate-900",
+          "focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+        )}
       >
-        <option value="">{placeholder}</option>
+        <option value="" disabled hidden>
+          {placeholder}
+        </option>
 
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
