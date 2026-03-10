@@ -19,7 +19,7 @@ const LoginPage = () => {
   const [step, setStep] = useState<"login" | "otp">("login")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
+  const [smsConsent, setSmsConsent] = useState(false)
   const isPhone = (value: string) => {
     const digits = value.replace(/\D/g, "")
     return digits.length === 10
@@ -39,7 +39,11 @@ const LoginPage = () => {
 
       // 📱 LOGIN POR TELEFONO
       if (isPhone(identifier)) {
-
+        if (!smsConsent) {
+          setError("Debes aceptar recibir SMS para continuar")
+          setLoading(false)
+          return
+        }
         const phone = identifier.replace(/\D/g, "")
 
         await axios.post(
@@ -162,7 +166,20 @@ const LoginPage = () => {
                     />
                   </div>
                 </Field>
-
+                {isPhone(identifier) && (
+                  <label className="flex items-start gap-2 text-sm text-slate-600">
+                    <input
+                      type="checkbox"
+                      checked={smsConsent}
+                      onChange={(e) => setSmsConsent(e.target.checked)}
+                      className="mt-1"
+                    />
+                    <span>
+                      Acepto recibir mensajes SMS para autenticación y notificaciones de AlphaVet.
+                      Pueden aplicarse cargos de mi operador.
+                    </span>
+                  </label>
+                )}
                 {isEmail(identifier) && (
                   <Field label="Contraseña" required>
                     <div className="relative">
