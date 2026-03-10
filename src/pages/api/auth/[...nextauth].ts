@@ -10,13 +10,25 @@ export default NextAuth({
 
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
-        email: { type: 'email' },
-        password: { type: 'password' },
+        email: { type: "email" },
+        password: { type: "password" },
+        token: { type: "text" }
       },
       async authorize(credentials) {
-        if (!credentials) return null
+
+        // login con token OTP
+        if (credentials?.token) {
+
+          return {
+            id: "otp-user",
+            token: credentials.token
+          }
+
+        }
+
+        if (!credentials?.email) return null
 
         const res = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,

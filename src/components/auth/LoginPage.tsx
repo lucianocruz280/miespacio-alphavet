@@ -1,45 +1,119 @@
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Mail, Lock, Loader, Smartphone } from "lucide-react"
+import axios from "axios"
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Mail, Lock, Loader } from 'lucide-react'
-
-import Card from '@/components/ui/Card'
-import Field from '@/components/ui/Field'
-import Input from '@/components/ui/Input'
-import Button from '@/components/ui/Button'
-import { signIn } from 'next-auth/react'
+import Card from "@/components/ui/Card"
+import Field from "@/components/ui/Field"
+import Input from "@/components/ui/Input"
+import Button from "@/components/ui/Button"
+import { signIn } from "next-auth/react"
 
 const LoginPage = () => {
+
   const router = useRouter()
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [identifier, setIdentifier] = useState("")
+  const [password, setPassword] = useState("")
+  const [otp, setOtp] = useState("")
+  const [step, setStep] = useState<"login" | "otp">("login")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const isPhone = (value: string) => {
+    const digits = value.replace(/\D/g, "")
+    return digits.length === 10
+  }
 
+  const isEmail = (value: string) => {
+    return value.includes("@")
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
+
     e.preventDefault()
-    setLoading(true)
     setError(null)
+    setLoading(true)
 
-    const res = await signIn('credentials', {
-      email,
-      password,
-      redirect: false,
-    })
+    try {
 
-    if (res?.error) {
-      setError('Credenciales inválidas')
-    } else {
-      router.push('/')
+      // 📱 LOGIN POR TELEFONO
+      if (isPhone(identifier)) {
+
+        const phone = identifier.replace(/\D/g, "")
+
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/request-phone-code`,
+          { phone }
+        )
+
+        setStep("otp")
+        setLoading(false)
+        return
+      }
+
+      // 📧 LOGIN EMAIL
+      if (isEmail(identifier)) {
+
+        const res = await signIn("credentials", {
+          email: identifier,
+          password,
+          redirect: false,
+        })
+
+        if (res?.error) {
+          setError("Credenciales inválidas")
+        } else {
+          router.push("/")
+        }
+
+        setLoading(false)
+        return
+      }
+
+      setError("Ingresa un email o teléfono válido")
+
+    } catch (err) {
+      setError("Ocurrió un error")
+      setLoading(false)
+    }
+
+  }
+
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+
+    e.preventDefault()
+
+    setLoading(true)
+
+    try {
+
+      const phone = identifier.replace(/\D/g, "")
+
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-phone-code`,
+        {
+          phone,
+          code: otp
+        }
+      )
+
+      const token = res.data.data.token
+
+      await signIn("credentials", {
+        token,
+        redirect: false
+      })
+
+      router.push("/")
+
+    } catch (error) {
+      setError("Código incorrecto")
     }
 
     setLoading(false)
+
   }
-
-
   return (
     <main className="h-screen w-full flex overflow-hidden bg-white">
 
@@ -61,69 +135,92 @@ const LoginPage = () => {
 
       <div className="w-full lg:w-1/2 h-full flex items-center justify-center p-8">
         <div className="w-full max-w-sm">
+
           <div className="mb-8">
-            <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
+            <h1 className="text-2xl font-semibold tracking-tight">
               Iniciar sesión
             </h1>
             <p className="text-sm text-slate-500 mt-2">
-              Accede a tu cuenta para gestionar tus mascotas y citas.
+              Accede a tu cuenta AlphaVet
             </p>
           </div>
 
-          <Card className="p-6 sm:p-8">
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <Field label="Email" required>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-                  <Input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="pl-9"
-                    placeholder="nombre@ejemplo.com"
-                  />
-                </div>
-              </Field>
+          <Card className="p-6 space-y-5">
 
-              <Field label="Contraseña" required>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-                  <Input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pl-9"
-                    placeholder="••••••••"
-                  />
-                </div>
-              </Field>
+            {step === "login" && (
 
-              {error && (
-                <p className="text-sm text-red-600">{error}</p>
-              )}
+              <form onSubmit={handleSubmit} className="space-y-5">
 
-              <Button type="submit" className="w-full">
-                {loading ? <Loader /> : "Iniciar Sesión"}
-              </Button>
-              <Button onClick={() => signIn('google')}>
-                Continuar con Google
-              </Button>
+                <Field label="Email o Teléfono" required>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                    <Input
+                      value={identifier}
+                      onChange={(e) => setIdentifier(e.target.value)}
+                      className="pl-9"
+                      placeholder="correo o 6691234567"
+                    />
+                  </div>
+                </Field>
 
-            </form>
+                {isEmail(identifier) && (
+                  <Field label="Contraseña" required>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                      <Input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="pl-9"
+                      />
+                    </div>
+                  </Field>
+                )}
+
+                {error && (
+                  <p className="text-sm text-red-600">{error}</p>
+                )}
+
+                <Button type="submit" className="w-full">
+                  {loading ? <Loader /> : "Continuar"}
+                </Button>
+
+                <Button onClick={() => signIn("google")}>
+                  Continuar con Google
+                </Button>
+
+              </form>
+            )}
+
+            {step === "otp" && (
+
+              <form onSubmit={handleVerifyOtp} className="space-y-5">
+
+                <Field label="Código SMS">
+                  <div className="relative">
+                    <Smartphone className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                    <Input
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                      className="pl-9"
+                      placeholder="1234"
+                    />
+                  </div>
+                </Field>
+
+                <Button type="submit" className="w-full">
+                  {loading ? <Loader /> : "Verificar código"}
+                </Button>
+
+              </form>
+            )}
+
           </Card>
 
-          <p className="mt-6 text-sm text-slate-500 text-center">
-            ¿No tienes cuenta?{' '}
-            <a
-              href="/auth/signup"
-              className="font-medium text-blue-600 hover:underline"
-            >
-              Regístrate
-            </a>
-          </p>
         </div>
       </div>
-    </main>
+
+    </main >
   )
 }
 
