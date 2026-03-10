@@ -38,6 +38,7 @@ const PetSelector = ({ selectedPetId, onSelect }: Props) => {
                         }`}
                 >
                     <PetCard
+                        id={pet.id}
                         name={pet.name}
                         meta={buildMeta(pet)}
                         lastVisit="—"
@@ -50,7 +51,7 @@ const PetSelector = ({ selectedPetId, onSelect }: Props) => {
                 </button>
             ))}
 
-            <AddPetCard classNames=""/>
+            <AddPetCard classNames="" />
         </div>
     )
 }
