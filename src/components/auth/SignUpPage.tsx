@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Mail, Lock, User, Quote, Loader } from 'lucide-react'
+import { Mail, Lock, User, Quote, Loader, Smartphone } from 'lucide-react'
 
 import Card from '@/components/ui/Card'
 import Field from '@/components/ui/Field'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
+import { signIn } from 'next-auth/react'
 
 const SignupPage = () => {
   const router = useRouter()
@@ -15,6 +16,7 @@ const SignupPage = () => {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [phone, setPhone] = useState("")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -28,18 +30,24 @@ const SignupPage = () => {
         body: JSON.stringify({
           name,
           email,
+          phone,
           password,
         }),
       })
 
       const data = await res.json()
 
-      if (!data?.success) {
-        throw new Error(data?.message || 'Error al registrar usuario')
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data?.message || "Error al registrar usuario")
       }
 
-      localStorage.setItem('token', data.data.token)
-      router.push('/')
+      await signIn("credentials", {
+        token: data.data.token,
+        redirect: false
+      })
+
+      router.push("/home")
     } catch (err: any) {
       setError(err.message || 'Error inesperado')
     } finally {
@@ -135,6 +143,18 @@ const SignupPage = () => {
                 </div>
               </Field>
 
+              <Field label="Teléfono (opcional)">
+                <div className="relative">
+                  <Smartphone className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                  <Input
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="pl-9"
+                    placeholder="6691234567"
+                  />
+                </div>
+              </Field>
+
               <Field label="Contraseña" required>
                 <div className="relative">
                   <Lock className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
@@ -150,8 +170,8 @@ const SignupPage = () => {
 
               {error && <p className="text-sm text-red-600">{error}</p>}
 
-             <Button type="submit" className="w-full">
-                {loading ? <Loader /> : "Iniciar Sesión"}
+              <Button type="submit" className="w-full">
+                {loading ? <Loader /> : "Crear cuenta"}
               </Button>
             </form>
           </Card>

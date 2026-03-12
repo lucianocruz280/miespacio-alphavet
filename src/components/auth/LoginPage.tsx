@@ -109,7 +109,7 @@ const LoginPage = () => {
         redirect: false
       })
 
-      router.push("/")
+      router.push("/home")
 
     } catch (error) {
       setError("Código incorrecto")
