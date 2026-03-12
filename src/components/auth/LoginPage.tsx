@@ -234,6 +234,13 @@ const LoginPage = () => {
 
           </Card>
 
+          <p className="mt-8 text-center text-sm text-slate-500">
+            ¿No tienes cuenta?{' '}
+            <a href="/auth/signin" className="font-medium text-blue-600 hover:underline">
+              Crear cuenta
+            </a>
+          </p>
+
         </div>
       </div>
 
