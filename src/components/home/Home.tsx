@@ -20,7 +20,9 @@ const HomeComponent = () => {
           price="$350 MXN"
           code="HOSPITAL"
           icon={Stethoscope}
+ 
         />
+
         <ServiceCard
           title="Estética"
           description="Baño, corte, uñas y spa."
@@ -28,7 +30,9 @@ const HomeComponent = () => {
           price="$450 MXN"
           code="ESTETICA"
           icon={Scissors}
+          disabled
         />
+
         <ServiceCard
           title="Farmacia"
           description="Medicamentos y prenscripciones"
@@ -36,7 +40,9 @@ const HomeComponent = () => {
           code="FARMACIA"
           price="$900 MXN"
           icon={BriefcaseMedical}
+          disabled
         />
+
         <ServiceCard
           title="Tienda en línea"
           description="Croquetas, juguetes, jaulas."
@@ -44,6 +50,7 @@ const HomeComponent = () => {
           code="ECOMMERCE"
           price="$600 MXN"
           icon={Hotel}
+          disabled
         />
 
         <ServiceCard
@@ -53,7 +60,9 @@ const HomeComponent = () => {
           price="$1,200 MXN"
           code="CREMATORIO"
           icon={Flower2}
+          disabled
         />
+
       </div>
     </main>
   )
