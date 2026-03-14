@@ -6,6 +6,7 @@ type Props = {
     title: string;
     description: string;
     duration: string;
+    code: "HOSPITAL" | "ESTETICA" | "FARMACIA" | "CREMATORIO" | "ECOMMERCE"
     price: string;
     icon: LucideIcon;
 };
@@ -14,13 +15,14 @@ export default function ServiceCard({
     title,
     description,
     duration,
+    code,
     price,
     icon: Icon,
 }: Props) {
     // const selectService = useServiceStore((s) => s.selectService)
     const router = useRouter()
     const selectService = ({}) => {
-        router.push("/appointments")
+        router.push(`/appointments?code=${code}`)
     }
     return (
 

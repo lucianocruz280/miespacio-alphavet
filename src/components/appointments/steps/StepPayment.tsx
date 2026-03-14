@@ -111,7 +111,7 @@ const StepPayment = ({
                             }
                         />
                     </button>
-                    <button
+                    {/* <button
                         type="button"
                         onClick={() => onChange({ paymentMethod: "CARD" })}
                         className={[
@@ -149,7 +149,7 @@ const StepPayment = ({
                                     : "text-slate-300"
                             }
                         />
-                    </button>
+                    </button> */}
 
                 </div>
             </div>

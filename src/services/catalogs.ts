@@ -1,4 +1,4 @@
-const API = "https://alphavet-api-142774451984.us-central1.run.app"
+const API = process.env.NEXT_PUBLIC_API_URL
 
 export type CatalogItem = {
   id: string

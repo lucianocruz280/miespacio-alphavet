@@ -8,12 +8,13 @@ import StepExtras from "./steps/StepExtras"
 import StepPayment from "./steps/StepPayment"
 import { AppointmentDraft } from "@/types/appointments"
 import api from "@/lib/axios"
+import { useRouter } from "next/router"
 
 
 const CreateAppointmentView = () => {
     const stepper = useStepper()
     const [draft, setDraft] = useState<AppointmentDraft>({})
-
+    const router = useRouter()
     const updateDraft = (patch: Partial<AppointmentDraft>) => {
         setDraft((prev) => ({ ...prev, ...patch }))
     }
@@ -27,7 +28,9 @@ const CreateAppointmentView = () => {
 
     const totalSteps = stepper.all.length
     const progressPct = (currentStepNumber / totalSteps) * 100
-
+    const { code: query } = router.query
+    const code = query as string
+   if (!code) return <div>Cargando...</div>
     return (
         <main className="max-w-6xl mx-auto p-4 md:p-8 space-y-8">
 
@@ -53,6 +56,7 @@ const CreateAppointmentView = () => {
                     draft={draft}
                     onChange={updateDraft}
                     onNext={stepper.next}
+                    code={code}
                 />
             ))}
 

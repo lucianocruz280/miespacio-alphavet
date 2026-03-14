@@ -6,6 +6,7 @@ import useAxios from "@/hooks/useAxios"
 import { PetResponse } from "@/types/Pets"
 import AddPetCard from "@/components/pets/AddPetCard"
 import { useState } from "react"
+import { useRouter } from "next/router"
 
 type AppointmentDraft = {
   petId?: string
@@ -18,10 +19,12 @@ type StepBaseInfoProps = {
   draft: AppointmentDraft
   onChange: (patch: Partial<AppointmentDraft>) => void
   onNext: () => void
+  code: string
 }
 
-const StepBaseInfo = ({ draft, onChange, onNext }: StepBaseInfoProps) => {
+const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
   const { data, loading } = useAxios({ method: "get", url: "pets" })
+  const router = useRouter()
   const pets = (data as PetResponse)?.data ?? []
   const [mobileStage, setMobileStage] = useState<"PET" | "BRANCH" | "SERVICE">("PET")
   const { data: modulesData } = useAxios({
@@ -30,7 +33,7 @@ const StepBaseInfo = ({ draft, onChange, onNext }: StepBaseInfoProps) => {
   })
 
   const hospitalModule = (modulesData as any[])?.find(
-    (app) => app.code === "HOSPITAL"
+    (app) => app.code === code
   )
   const hospitalBranches = hospitalModule?.branches ?? []
   const isMobile = true
@@ -100,7 +103,7 @@ const StepBaseInfo = ({ draft, onChange, onNext }: StepBaseInfoProps) => {
                 />
               ))}
 
-              <AddPetCard />
+              <AddPetCard hasReturn={true} />
             </div>
           </div>
         )}

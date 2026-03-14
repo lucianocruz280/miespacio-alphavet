@@ -5,12 +5,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/20 backdrop-blur-md ">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2 group cursor-pointer">
-          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white">
-            <HeartPulse width="20" />
-          </div>
-          <span className="text-lg font-semibold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
-            Alphavet
-          </span>
+         <img src="/images/logo.png" alt="" />
         </div>
 
         <nav className="hidden md:flex items-center gap-8">

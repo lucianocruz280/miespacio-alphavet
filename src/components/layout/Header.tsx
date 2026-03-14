@@ -11,12 +11,10 @@ export default function Header() {
 
             <div className="max-w-[1600px] mx-auto px-4 lg:px-6 h-16 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 shrink-0">
-                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm">
-                        <span className="text-white font-semibold text-sm">VH</span>
-                    </div>
+                   
                     <div className="flex items-center gap-2">
                         <Link href="/" className="text-slate-900 font-medium text-lg">
-                            Alphavet
+                            <img src="/images/logo.png" alt="" className="w-30" />
                         </Link>
                         <span className="hidden md:inline-flex px-2 py-0.5 rounded-full text-xs bg-slate-100 border border-slate-200">
                             Online

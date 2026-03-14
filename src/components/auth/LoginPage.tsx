@@ -68,7 +68,7 @@ const LoginPage = () => {
         if (res?.error) {
           setError("Credenciales inválidas")
         } else {
-          router.push("/")
+          router.push("/home")
         }
 
         setLoading(false)
@@ -139,7 +139,9 @@ const LoginPage = () => {
 
       <div className="w-full lg:w-1/2 h-full flex items-center justify-center p-8">
         <div className="w-full max-w-sm">
-
+           <div className="flex items-center gap-2 mb-14 mt-4 text-slate-900 h-10">
+            <img src="/images/logo.png" />
+          </div>
           <div className="mb-8">
             <h1 className="text-2xl font-semibold tracking-tight">
               Iniciar sesión
@@ -161,7 +163,7 @@ const LoginPage = () => {
                     <Input
                       value={identifier}
                       onChange={(e) => setIdentifier(e.target.value)}
-                      className="pl-9"
+                      className="pl-9 text-base"
                       placeholder="correo o 6691234567"
                     />
                   </div>
@@ -172,7 +174,7 @@ const LoginPage = () => {
                       type="checkbox"
                       checked={smsConsent}
                       onChange={(e) => setSmsConsent(e.target.checked)}
-                      className="mt-1"
+                      className="mt-1 text-base"
                     />
                     <span>
                       Acepto recibir mensajes SMS para autenticación y notificaciones de AlphaVet.
@@ -188,7 +190,7 @@ const LoginPage = () => {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="pl-9"
+                        className="pl-9 text-base"
                       />
                     </div>
                   </Field>
@@ -202,9 +204,9 @@ const LoginPage = () => {
                   {loading ? <Loader /> : "Continuar"}
                 </Button>
 
-                <Button onClick={() => signIn("google")}>
+                {/* <Button onClick={() => signIn("google")}>
                   Continuar con Google
-                </Button>
+                </Button> */}
 
               </form>
             )}

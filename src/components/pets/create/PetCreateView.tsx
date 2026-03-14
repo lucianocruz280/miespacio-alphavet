@@ -47,7 +47,7 @@ const PetCreateView = () => {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<Record<string, string>>({})
   const [uploading, setUploading] = useState(false)
-
+  const { return: returnUrl } = router.query
   const update = (key: string, value: any) =>
     setForm((prev) => ({ ...prev, [key]: value }))
 
@@ -120,7 +120,12 @@ const PetCreateView = () => {
         photo: photoUrl,
       })
 
-      router.push("/pets")
+      if (returnUrl) {
+        router.push(returnUrl as string)
+      } else {
+        router.push("/pets")
+      }
+
     } catch (err: any) {
       setError(err.message || "Error al guardar la mascota")
     } finally {
@@ -289,6 +294,7 @@ const PetCreateView = () => {
 
             <Field label="ID de microchip">
               <Input
+                placeholder="Si no cuenta con microchip, no escribir nada"
                 value={form.microchip}
                 onChange={(e) => update("microchip", e.target.value)}
               />
