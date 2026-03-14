@@ -126,7 +126,7 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
             />
           ))}
 
-          <AddPetCard classNames="hidden lg:flex" />
+          <AddPetCard classNames="hidden lg:flex" hasReturn />
 
           <button
             type="button"
