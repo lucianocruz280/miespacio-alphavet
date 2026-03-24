@@ -11,8 +11,8 @@ const SidebarNavigation = () => {
       <nav className="space-y-1">
          <SidebarItem icon={Home} label="Inicio" href="/" />
         <SidebarItem icon={PawPrint} label="Mis Mascotas" href="/pets" />
-        <SidebarItem icon={LayoutList} label="Mis Servicios" />
-        <SidebarItem icon={Calendar} label="Mis Citas" />
+        <SidebarItem icon={LayoutList} label="Mis Servicios" href="/my-services" />
+        <SidebarItem icon={Calendar} label="Mis Citas" href="/my-appointments" />
       </nav>
     </div>
   )

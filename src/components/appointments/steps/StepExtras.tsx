@@ -52,7 +52,7 @@ const StepExtras = ({
                     </Button>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                    <button
+                    {/* <button
                         type="button"
                         onClick={() => onChange({ coupon: "BIENVENIDA10" })}
                         className="text-xs bg-green-50 text-green-700 px-3 py-1.5 rounded-full border border-green-100
@@ -60,7 +60,7 @@ const StepExtras = ({
                     >
                         <Icon icon="lucide:tag" width={12} />
                         10% OFF Primera Visita
-                    </button>
+                    </button> */}
                 </div>
             </div>
             <div className="space-y-2">

@@ -206,15 +206,15 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
               <ServiceTypeCard
                 label="Vacunación"
                 icon="syringe"
-                selected={draft.serviceType === "VACUNACION"}
-                onSelect={() => handleServiceSelect("VACUNACION")}
+                selected={draft.serviceType === "VACUNA"}
+                onSelect={() => handleServiceSelect("VACUNA")}
               />
 
               <ServiceTypeCard
                 label="Desparasitación"
                 icon="pill"
-                selected={draft.serviceType === "DESPARASITACION"}
-                onSelect={() => handleServiceSelect("DESPARASITACION")}
+                selected={draft.serviceType === "OTRO"}
+                onSelect={() => handleServiceSelect("OTRO")}
               />
 
               <ServiceTypeCard
@@ -245,22 +245,22 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
           <ServiceTypeCard
             label="Vacunación"
             icon="syringe"
-            selected={draft.serviceType === "VACUNACION"}
-            onSelect={() => onChange({ serviceType: "VACUNACION" })}
+            selected={draft.serviceType === "VACUNA"}
+            onSelect={() => onChange({ serviceType: "VACUNA" })}
           />
 
           <ServiceTypeCard
-            label="Desparacitación"
+            label="Desparasitación"
             icon="pill"
-            selected={draft.serviceType === "ESTETICA"}
-            onSelect={() => onChange({ serviceType: "ESTETICA" })}
+            selected={draft.serviceType === "OTRO"}
+            onSelect={() => onChange({ serviceType: "OTRO" })}
           />
 
           <ServiceTypeCard
-            label="Revision"
+            label="Revisión"
             icon="siren"
-            selected={draft.serviceType === "EMERGENCIA"}
-            onSelect={() => onChange({ serviceType: "EMERGENCIA" })}
+            selected={draft.serviceType === "REVISION"}
+            onSelect={() => onChange({ serviceType: "REVISION" })}
           />
         </div>
       </div>

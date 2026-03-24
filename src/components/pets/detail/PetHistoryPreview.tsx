@@ -5,7 +5,10 @@ type HistoryItem = {
   dateNumber: string
   title: string
   subtitle: string
+  href?: string
 }
+
+import Link from "next/link"
 
 const PetHistoryPreview = ({ items }: { items: HistoryItem[] }) => {
   return (
@@ -20,13 +23,14 @@ const PetHistoryPreview = ({ items }: { items: HistoryItem[] }) => {
       </div>
 
       <div className="divide-y divide-slate-100">
-        {items.map((item, index) => (
-          <div
-            key={index}
-            className="p-4 sm:p-6 flex items-center gap-4 hover:bg-slate-50 transition group cursor-pointer"
-          >
-            <div className="w-12 h-12 rounded-xl bg-slate-100 flex flex-col items-center justify-center border border-slate-200">
-              <span className="text-[10px] uppercase font-bold text-slate-400">
+        {items.map((item, index) => {
+          const Content = (
+            <div
+              key={index}
+              className="p-4 sm:p-6 flex items-center gap-4 hover:bg-slate-50 transition group cursor-pointer"
+            >
+              <div className="w-12 h-12 rounded-xl bg-slate-100 flex flex-col items-center justify-center border border-slate-200">
+                <span className="text-[10px] uppercase font-bold text-slate-400">
                 {item.dateLabel}
               </span>
               <span className="text-sm font-semibold text-slate-900">
@@ -45,7 +49,14 @@ const PetHistoryPreview = ({ items }: { items: HistoryItem[] }) => {
 
             <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-slate-400" />
           </div>
-        ))}
+          )
+          
+          return item.href ? (
+            <Link href={item.href} key={index} className="block">
+              {Content}
+            </Link>
+          ) : Content
+        })}
       </div>
     </div>
   )

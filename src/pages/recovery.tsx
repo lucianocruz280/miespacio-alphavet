@@ -1,9 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/router"
 import axios from "axios"
-import { Mail, Smartphone, Lock, Loader } from "lucide-react"
+import { Mail, Smartphone, Lock, Loader, Eye, EyeOff } from "lucide-react"
 import { signIn } from "next-auth/react"
 
 import Card from "@/components/ui/Card"
@@ -19,9 +19,7 @@ type Step =
 export default function RecoveryPage() {
 
     const router = useRouter()
-    const searchParams = useSearchParams()
-
-    const emailFromUrl = searchParams.get("email")
+    const emailFromUrl = router.query.email as string | undefined
 
     const [step, setStep] = useState<Step>("identifier")
 
@@ -31,6 +29,7 @@ export default function RecoveryPage() {
     const [cooldown, setCooldown] = useState(0)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [showPassword, setShowPassword] = useState(false)
 
     useEffect(() => {
 
@@ -130,7 +129,7 @@ export default function RecoveryPage() {
                 redirect: false
             })
 
-            router.push("/")
+            router.push("/home")
 
         } catch {
 
@@ -164,7 +163,7 @@ export default function RecoveryPage() {
                 redirect: false
             })
 
-            router.push("/")
+            router.push("/home")
 
         } catch (err: any) {
 
@@ -306,11 +305,20 @@ export default function RecoveryPage() {
                                         <Lock className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
 
                                         <Input
-                                            type="password"
+                                            type={showPassword ? "text" : "password"}
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
-                                            className="pl-9"
+                                            className="pl-9 pr-10"
                                         />
+
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 focus:outline-none"
+                                            tabIndex={-1}
+                                        >
+                                            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                        </button>
 
                                     </div>
 

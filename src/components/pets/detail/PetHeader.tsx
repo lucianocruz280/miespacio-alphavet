@@ -19,6 +19,8 @@ type PetHeaderProps = {
   species: string
   subtitle: string
   imageUrl?: string
+  onEditClick?: () => void
+  onScheduleClick?: () => void
 }
 
 const speciesConfig: Record<
@@ -64,6 +66,8 @@ const PetHeader = ({
   species,
   subtitle,
   imageUrl,
+  onEditClick,
+  onScheduleClick,
 }: PetHeaderProps) => {
 
   const config = speciesConfig[species] || speciesConfig["Otro"]
@@ -115,12 +119,12 @@ const PetHeader = ({
 
           <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
 
-            <Button>
+            <Button onClick={onScheduleClick}>
               <CalendarPlus className="w-4 h-4" />
               Agendar cita
             </Button>
 
-            <Button variant="secondary">
+            <Button variant="secondary" onClick={onEditClick}>
               <Pencil className="w-4 h-4" />
               Editar perfil
             </Button>

@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Mail, Lock, Loader, Smartphone } from "lucide-react"
+import { useRouter } from "next/router"
+import { Mail, Lock, Loader, Smartphone, Eye, EyeOff } from "lucide-react"
 import axios from "axios"
 
 import Card from "@/components/ui/Card"
@@ -20,6 +20,7 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [smsConsent, setSmsConsent] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const isPhone = (value: string) => {
     const digits = value.replace(/\D/g, "")
     return digits.length === 10
@@ -187,11 +188,19 @@ const LoginPage = () => {
                     <div className="relative">
                       <Lock className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
                       <Input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="pl-9 text-base"
+                        className="pl-9 pr-10 text-base"
                       />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 focus:outline-none"
+                        tabIndex={-1}
+                      >
+                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
                     </div>
                   </Field>
                 )}

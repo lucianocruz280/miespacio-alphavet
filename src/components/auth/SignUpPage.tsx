@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Mail, Lock, User, Quote, Loader, Smartphone } from 'lucide-react'
+import { useRouter } from "next/router"
+import { Mail, Lock, User, Quote, Loader, Smartphone, Eye, EyeOff } from 'lucide-react'
 
 import Card from '@/components/ui/Card'
 import Field from '@/components/ui/Field'
@@ -237,9 +237,10 @@ const SignupPage = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-2 text-slate-400 text-sm"
+                    className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 focus:outline-none"
+                    tabIndex={-1}
                   >
-                    {showPassword ? "Ocultar" : "Ver"}
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
 
                 </div>
@@ -267,9 +268,10 @@ const SignupPage = () => {
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-2 text-slate-400 text-sm"
+                    className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 focus:outline-none"
+                    tabIndex={-1}
                   >
-                    {showConfirmPassword ? "Ocultar" : "Ver"}
+                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
 
                 </div>

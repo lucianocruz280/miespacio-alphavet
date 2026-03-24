@@ -9,7 +9,7 @@ const Sidebar = () => {
         <aside className="w-full lg:w-80 shrink-0 space-y-6">
             {/* <SidebarSummary /> */}
             <SidebarNavigation />
-            <SidebarPromotions />
+            {/* <SidebarPromotions /> */}
             <SidebarPackages />
             <SidebarSupport />
         </aside>
