@@ -1,5 +1,6 @@
 import MainLayout from "@/components/layout/Layout"
 import AppointmentsList from "@/components/appointments/AppointmentsList"
+import { serverSideTranslations } from 'next-i18next/pages/serverSideTranslations'
 
 const MyAppointmentsPage = () => {
   return (
@@ -18,5 +19,11 @@ const MyAppointmentsPage = () => {
     </MainLayout>
   )
 }
+
+export const getStaticProps = async ({ locale }: { locale: string }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'es', ['common'])),
+  },
+})
 
 export default MyAppointmentsPage

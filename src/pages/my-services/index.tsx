@@ -1,5 +1,6 @@
 import MainLayout from "@/components/layout/Layout"
 import ServicesList from "@/components/services/ServicesList"
+import { serverSideTranslations } from 'next-i18next/pages/serverSideTranslations'
 
 const MyServicesPage = () => {
   return (
@@ -18,5 +19,11 @@ const MyServicesPage = () => {
     </MainLayout>
   )
 }
+
+export const getStaticProps = async ({ locale }: { locale: string }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'es', ['common'])),
+  },
+})
 
 export default MyServicesPage
