@@ -9,27 +9,30 @@ import Field from "@/components/ui/Field"
 import Input from "@/components/ui/Input"
 import Select from "@/components/ui/Select"
 import Textarea from "@/components/ui/Textarea"
-import SelectCreatable from "@/components/ui/SelectCreatable"
+import { useTranslation } from "react-i18next"
 
 import { useSpecies } from "@/hooks/useSpecies"
 import { useBreeds } from "@/hooks/useBreeds"
 import api from "@/lib/axios"
 
-const genderOptions = [
-  { value: "", label: "Selecciona..." },
-  { value: "male", label: "Macho" },
-  { value: "female", label: "Hembra" },
-]
+
 
 const PetCreateView = () => {
   const router = useRouter()
+  const { t } = useTranslation('common')
+
+  const genderOptions = [
+    { value: "", label: t("pets.createView.genderOptions.select") },
+    { value: "male", label: t("pets.createView.genderOptions.male") },
+    { value: "female", label: t("pets.createView.genderOptions.female") },
+  ]
 
   const [speciesId, setSpeciesId] = useState("")
   const [speciesName, setSpeciesName] = useState("")
   const [breedId, setBreedId] = useState("")
   const [breedName, setBreedName] = useState("")
-  const { species, loading: speciesLoading, create: createSpecies } = useSpecies()
-  const { breeds, loading: breedsLoading, create: createBreed } = useBreeds(speciesId)
+  const { species } = useSpecies()
+  const { breeds, loading: breedsLoading } = useBreeds(speciesId)
   const [genderId, setGenderId] = useState("")
   const [gender, setGender] = useState("")
   const [form, setForm] = useState({
@@ -48,7 +51,7 @@ const PetCreateView = () => {
   const [error, setError] = useState<Record<string, string>>({})
   const [uploading, setUploading] = useState(false)
   const { return: returnUrl } = router.query
-  const update = (key: string, value: any) =>
+  const update = (key: string, value: string) =>
     setForm((prev) => ({ ...prev, [key]: value }))
 
 
@@ -95,10 +98,10 @@ const PetCreateView = () => {
     try {
       const errors: Record<string, string> = {}
 
-      if (!form.name) errors.name = "El nombre es obligatorio"
-      if (!speciesId) errors.species = "Selecciona una especie"
-      if (!breedId) errors.breed = "Selecciona una raza"
-      if (!gender) errors.gender = "Por favor, selecciona un género"
+      if (!form.name) errors.name = t("pets.createView.errors.nameRequired")
+      if (!speciesId) errors.species = t("pets.createView.errors.speciesRequired")
+      if (!breedId) errors.breed = t("pets.createView.errors.breedRequired")
+      if (!gender) errors.gender = t("pets.createView.errors.genderRequired")
 
       if (Object.keys(errors).length > 0) {
         setError(errors)
@@ -126,8 +129,12 @@ const PetCreateView = () => {
         router.push("/pets")
       }
 
-    } catch (err: any) {
-      setError(err.message || "Error al guardar la mascota")
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError({ submit: err.message || t("pets.createView.errors.saveError") })
+      } else {
+        setError({ submit: t("pets.createView.errors.saveError") })
+      }
     } finally {
       setSaving(false)
     }
@@ -142,16 +149,16 @@ const PetCreateView = () => {
           <div className="flex items-start justify-between gap-4">
             <div>
               <h1 className="text-3xl font-medium tracking-tight text-slate-900">
-                Agregar mascota
+                {t("pets.createView.title")}
               </h1>
               <p className="mt-1 text-slate-500">
-                Registra a tu mascota para agendar citas, guardar historial y recibir recordatorios.
+                {t("pets.createView.subtitle")}
               </p>
             </div>
 
             <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-primary-50 text-primary-700 border border-primary-100">
               <PawPrint className="w-4 h-4" />
-              Portal de clientes
+              {t("pets.createView.clientPortal")}
             </div>
           </div>
         </div>
@@ -173,7 +180,7 @@ const PetCreateView = () => {
 
                 {uploading && (
                   <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/70 backdrop-blur-sm">
-                    <span className="text-xs text-slate-600">Subiendo...</span>
+                    <span className="text-xs text-slate-600">{t("pets.createView.photoSection.uploading")}</span>
                   </div>
                 )}
 
@@ -196,27 +203,27 @@ const PetCreateView = () => {
 
             <div className="flex-1 text-center sm:text-left">
               <h2 className="text-lg font-semibold text-slate-900 tracking-tight">
-                Foto de tu mascota
+                {t("pets.createView.photoSection.title")}
               </h2>
               <p className="mt-1 text-sm text-slate-500">
-                Opcional, puedes subirla después.
+                {t("pets.createView.photoSection.subtitle")}
               </p>
             </div>
           </div>
         </Card>
 
         <Card>
-          <CardHeader title="Información básica" />
+          <CardHeader title={t("pets.createView.basicInfo.title")} />
           <div className="p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <Field label="Nombre" required error={error?.name}>
+            <Field label={t("pets.createView.basicInfo.nameLabel")} required error={error?.name}>
               <Input
-                placeholder="Ej. Bruno"
+                placeholder={t("pets.createView.basicInfo.namePlaceholder")}
                 value={form.name}
                 onChange={(e) => update("name", e.target.value)}
               />
             </Field>
 
-            <Field label="Especie" required error={error?.species}>
+            <Field label={t("pets.createView.basicInfo.speciesLabel")} required error={error?.species}>
               <Select
                 value={speciesId}
                 options={species}
@@ -231,7 +238,7 @@ const PetCreateView = () => {
               />
             </Field>
 
-            <Field label="Raza" required error={error?.breed}>
+            <Field label={t("pets.createView.basicInfo.breedLabel")} required error={error?.breed}>
               <Select
                 value={breedId}
                 options={breeds}
@@ -246,7 +253,7 @@ const PetCreateView = () => {
               />
             </Field>
 
-            <Field label="Sexo" error={error?.gender}>
+            <Field label={t("pets.createView.basicInfo.genderLabel")} error={error?.gender}>
               <Select
                 value={genderId}
 
@@ -259,22 +266,22 @@ const PetCreateView = () => {
               />
             </Field>
 
-            <Field label="Edad (años)">
+            <Field label={t("pets.createView.basicInfo.ageLabel")}>
               <Input
                 type="number"
                 min="0"
                 max="40"
-                placeholder="Ej. 2"
+                placeholder={t("pets.createView.basicInfo.agePlaceholder")}
                 value={form.age}
                 onChange={(e) => update("age", e.target.value)}
               />
             </Field>
 
-            <Field label="Peso (kg)">
+            <Field label={t("pets.createView.basicInfo.weightLabel")}>
               <Input
                 type="number"
                 step="0.1"
-                placeholder="Ej. 12.5"
+                placeholder={t("pets.createView.basicInfo.weightPlaceholder")}
                 value={form.weight}
                 onChange={(e) => update("weight", e.target.value)}
               />
@@ -283,25 +290,25 @@ const PetCreateView = () => {
         </Card>
 
         <Card>
-          <CardHeader title="Detalles adicionales" />
+          <CardHeader title={t("pets.createView.additionalDetails.title")} />
           <div className="p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <Field label="Color / señas particulares">
+            <Field label={t("pets.createView.additionalDetails.colorLabel")}>
               <Input
                 value={form.color}
                 onChange={(e) => update("color", e.target.value)}
               />
             </Field>
 
-            <Field label="ID de microchip">
+            <Field label={t("pets.createView.additionalDetails.microchipLabel")}>
               <Input
-                placeholder="Si no cuenta con microchip, no escribir nada"
+                placeholder={t("pets.createView.additionalDetails.microchipPlaceholder")}
                 value={form.microchip}
                 onChange={(e) => update("microchip", e.target.value)}
               />
             </Field>
 
             <div className="sm:col-span-2">
-              <Field label="Notas">
+              <Field label={t("pets.createView.additionalDetails.notesLabel")}>
                 <Textarea
                   value={form.notes}
                   onChange={(e) => update("notes", e.target.value)}
@@ -317,7 +324,7 @@ const PetCreateView = () => {
           <Card className="p-4 sm:p-5">
             <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
               <p className="text-sm text-slate-500">
-                Puedes editar estos datos después desde el perfil de la mascota.
+                {t("pets.createView.actions.editLaterMsg")}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
@@ -328,12 +335,12 @@ const PetCreateView = () => {
                   onClick={() => router.back()}
                 >
                   <X className="w-4 h-4 text-slate-500" />
-                  Cancelar
+                  {t("pets.createView.actions.cancelBtn")}
                 </Button>
 
                 <Button type="submit" disabled={saving}>
                   <Save className="w-4 h-4" />
-                  {saving ? "Guardando..." : "Guardar mascota"}
+                  {saving ? t("pets.createView.actions.savingBtn") : t("pets.createView.actions.saveBtn")}
                 </Button>
               </div>
             </div>

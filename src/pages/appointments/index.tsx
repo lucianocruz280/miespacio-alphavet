@@ -9,5 +9,13 @@ const Page = () => {
         </MainLayout>
     )
 }
+import { serverSideTranslations } from 'next-i18next/pages/serverSideTranslations'
 
 export default Page
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  }
+}

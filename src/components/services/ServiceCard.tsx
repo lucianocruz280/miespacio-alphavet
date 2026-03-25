@@ -11,6 +11,8 @@ type Props = {
   disabled?: boolean
 }
 
+import { useTranslation } from "react-i18next"
+
 export default function ServiceCard({
   title,
   description,
@@ -20,7 +22,7 @@ export default function ServiceCard({
   icon: Icon,
   disabled = false,
 }: Props) {
-
+  const { t } = useTranslation('common')
   const router = useRouter()
 
   const handleClick = () => {
@@ -73,7 +75,7 @@ export default function ServiceCard({
 
       <div className="mt-auto pt-4 flex justify-between text-sm border-t border-slate-50">
         <span className="text-slate-400">
-          Duración: {duration}
+          {t("services.card.duration")}: {duration}
         </span>
 
         <span
@@ -81,7 +83,7 @@ export default function ServiceCard({
             disabled ? "text-slate-400" : "text-slate-900"
           }`}
         >
-          desde {price}
+          {t("services.card.from")} {price}
         </span>
       </div>
     </button>

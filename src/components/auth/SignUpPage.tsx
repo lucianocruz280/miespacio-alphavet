@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from "next/router"
 import { Mail, Lock, User, Quote, Loader, Smartphone, Eye, EyeOff } from 'lucide-react'
+import { useTranslation } from "react-i18next"
 
 import Card from '@/components/ui/Card'
 import Field from '@/components/ui/Field'
@@ -9,7 +11,7 @@ import Button from '@/components/ui/Button'
 import { signIn } from 'next-auth/react'
 
 const SignupPage = () => {
-
+  const { t } = useTranslation('common')
   const router = useRouter()
 
   const [name, setName] = useState('')
@@ -33,27 +35,27 @@ const SignupPage = () => {
     setError(null)
 
     if (!name.trim()) {
-      setError("Ingresa tu nombre")
+      setError(t('auth.signup.errors.nameRequired'))
       return
     }
 
     if (!email.includes("@")) {
-      setError("Ingresa un email válido")
+      setError(t('auth.signup.errors.invalidEmail'))
       return
     }
 
     if (password.length < 8) {
-      setError("La contraseña debe tener al menos 8 caracteres")
+      setError(t('auth.signup.errors.passwordMinLength'))
       return
     }
 
     if (password !== confirmPassword) {
-      setError("Las contraseñas no coinciden")
+      setError(t('auth.signup.errors.passwordsDontMatch'))
       return
     }
 
     if (!acceptedTerms) {
-      setError("Debes aceptar los términos y condiciones")
+      setError(t('auth.signup.errors.termsRequired'))
       return
     }
 
@@ -77,14 +79,14 @@ const SignupPage = () => {
       if (!res.ok) {
 
         if (data?.message?.toLowerCase().includes("email")) {
-          throw new Error("Este email ya está registrado")
+          throw new Error(t('auth.signup.errors.emailExists'))
         }
 
         if (data?.message?.toLowerCase().includes("phone")) {
-          throw new Error("Este teléfono ya está registrado")
+          throw new Error(t('auth.signup.errors.phoneExists'))
         }
 
-        throw new Error(data?.message || "Error al registrar usuario")
+        throw new Error(data?.message || t('auth.signup.errors.registerError'))
       }
 
       await signIn("credentials", {
@@ -95,8 +97,7 @@ const SignupPage = () => {
       router.push("/home")
 
     } catch (err: any) {
-
-      setError(err.message || 'Error inesperado')
+      setError(err.message || t('auth.signup.errors.unexpectedError'))
 
     } finally {
 
@@ -124,7 +125,7 @@ const SignupPage = () => {
           </div>
 
           <p className="text-2xl font-medium text-white leading-snug tracking-tight max-w-lg">
-            “Crea tu cuenta y lleva el historial, vacunas y citas de tu mascota en un solo lugar.”
+            {t('auth.signup.quote')}
           </p>
 
           <div className="mt-6 flex items-center gap-3">
@@ -152,7 +153,7 @@ const SignupPage = () => {
             </div>
 
             <span className="text-sm font-medium text-slate-300">
-              Más de 2,000 dueños felices
+              {t('auth.signup.happyOwners')}
             </span>
 
           </div>
@@ -172,10 +173,10 @@ const SignupPage = () => {
 
           <div className="mb-8">
             <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-              Crear cuenta
+              {t('auth.signup.title')}
             </h1>
             <p className="text-sm text-slate-500 mt-2">
-              Regístrate para gestionar tus mascotas, historial y citas.
+              {t('auth.signup.subtitle')}
             </p>
           </div>
 
@@ -183,19 +184,19 @@ const SignupPage = () => {
 
             <form onSubmit={handleSubmit} className="space-y-5">
 
-              <Field label="Nombre completo" required>
+              <Field label={t('auth.signup.nameLabel')} required>
                 <div className="relative">
                   <User className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
                   <Input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="pl-9 text-base"
-                    placeholder="Juan Pérez"
+                    placeholder={t('auth.signup.namePlaceholder')}
                   />
                 </div>
               </Field>
 
-              <Field label="Email" required>
+              <Field label={t('auth.signup.emailLabel')} required>
                 <div className="relative">
                   <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
                   <Input
@@ -203,24 +204,24 @@ const SignupPage = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-9"
-                    placeholder="usuario@alphavet.com"
+                    placeholder={t('auth.signup.emailPlaceholder')}
                   />
                 </div>
               </Field>
 
-              <Field label="Teléfono (opcional)">
+              <Field label={t('auth.signup.phoneLabel')}>
                 <div className="relative">
                   <Smartphone className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
                   <Input
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     className="pl-9 text-base"
-                    placeholder="6691234567"
+                    placeholder={t('auth.signup.phonePlaceholder')}
                   />
                 </div>
               </Field>
 
-              <Field label="Contraseña" required>
+              <Field label={t('auth.signup.passwordLabel')} required>
 
                 <div className="relative">
 
@@ -231,7 +232,7 @@ const SignupPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-9 pr-10 text-base"
-                    placeholder="••••••••"
+                    placeholder={t('auth.signup.passwordPlaceholder')}
                   />
 
                   <button
@@ -246,12 +247,12 @@ const SignupPage = () => {
                 </div>
 
                 <p className="text-xs text-slate-500 mt-1">
-                  Mínimo 8 caracteres
+                  {t('auth.signup.passwordHint')}
                 </p>
 
               </Field>
 
-              <Field label="Confirmar contraseña" required>
+              <Field label={t('auth.signup.confirmPasswordLabel')} required>
 
                 <div className="relative">
 
@@ -262,7 +263,7 @@ const SignupPage = () => {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="pl-9 pr-10 text-base"
-                    placeholder="••••••••"
+                    placeholder={t('auth.signup.passwordPlaceholder')}
                   />
 
                   <button
@@ -287,7 +288,7 @@ const SignupPage = () => {
                   onChange={(e) => setAcceptedTerms(e.target.checked)}
                 />
 
-                Acepto los términos y condiciones
+                {t('auth.signup.termsLabel')}
 
               </label>
 
@@ -302,7 +303,7 @@ const SignupPage = () => {
                 disabled={loading}
                 className="w-full"
               >
-                {loading ? <Loader className="animate-spin" /> : "Crear cuenta"}
+                {loading ? <Loader className="animate-spin" /> : t('auth.signup.submitBtn')}
               </Button>
 
             </form>
@@ -310,10 +311,10 @@ const SignupPage = () => {
           </Card>
 
           <p className="mt-8 text-center text-sm text-slate-500">
-            ¿Ya tienes cuenta?{' '}
-            <a href="/auth/signin" className="font-medium text-blue-600 hover:underline">
-              Inicia sesión
-            </a>
+            {t('auth.signup.hasAccount')}{' '}
+            <Link href="/auth/signin" className="font-medium text-blue-600 hover:underline">
+              {t('auth.signup.loginBtn')}
+            </Link>
           </p>
 
         </div>

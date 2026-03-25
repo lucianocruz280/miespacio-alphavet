@@ -1,6 +1,8 @@
 import { useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { Mail, Lock, Loader, Smartphone, Eye, EyeOff } from "lucide-react"
+import { useTranslation } from "react-i18next"
 import axios from "axios"
 
 import Card from "@/components/ui/Card"
@@ -10,7 +12,7 @@ import Button from "@/components/ui/Button"
 import { signIn } from "next-auth/react"
 
 const LoginPage = () => {
-
+  const { t } = useTranslation('common')
   const router = useRouter()
 
   const [identifier, setIdentifier] = useState("")
@@ -41,7 +43,7 @@ const LoginPage = () => {
       // 📱 LOGIN POR TELEFONO
       if (isPhone(identifier)) {
         if (!smsConsent) {
-          setError("Debes aceptar recibir SMS para continuar")
+          setError(t('auth.login.errors.smsRequired'))
           setLoading(false)
           return
         }
@@ -67,7 +69,7 @@ const LoginPage = () => {
         })
 
         if (res?.error) {
-          setError("Credenciales inválidas")
+          setError(t('auth.login.errors.invalidCreds'))
         } else {
           router.push("/home")
         }
@@ -76,10 +78,10 @@ const LoginPage = () => {
         return
       }
 
-      setError("Ingresa un email o teléfono válido")
+      setError(t('auth.login.errors.invalidInput'))
 
-    } catch (err) {
-      setError("Ocurrió un error")
+    } catch {
+      setError(t('auth.login.errors.generalError'))
       setLoading(false)
     }
 
@@ -112,8 +114,8 @@ const LoginPage = () => {
 
       router.push("/home")
 
-    } catch (error) {
-      setError("Código incorrecto")
+    } catch {
+      setError(t('auth.login.errors.invalidCode'))
     }
 
     setLoading(false)
@@ -128,12 +130,11 @@ const LoginPage = () => {
 
         <div className="absolute bottom-0 left-0 p-12 w-full text-white">
           <p className="text-2xl font-medium leading-snug tracking-tight max-w-lg">
-            “Cuidamos a quienes más amas con la mejor tecnología y el cariño que
-            merecen.”
+            {t('auth.login.quote')}
           </p>
 
           <div className="mt-6 text-sm text-slate-300">
-            Más de 2,000 dueños felices
+            {t('auth.login.happyOwners')}
           </div>
         </div>
       </div>
@@ -145,10 +146,10 @@ const LoginPage = () => {
           </div>
           <div className="mb-8">
             <h1 className="text-2xl font-semibold tracking-tight">
-              Iniciar sesión
+              {t('auth.login.title')}
             </h1>
             <p className="text-sm text-slate-500 mt-2">
-              Accede a tu cuenta AlphaVet
+              {t('auth.login.subtitle')}
             </p>
           </div>
 
@@ -158,14 +159,14 @@ const LoginPage = () => {
 
               <form onSubmit={handleSubmit} className="space-y-5">
 
-                <Field label="Email o Teléfono" required>
+                <Field label={t('auth.login.identifierLabel')} required>
                   <div className="relative">
                     <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
                     <Input
                       value={identifier}
                       onChange={(e) => setIdentifier(e.target.value)}
                       className="pl-9 text-base"
-                      placeholder="correo o 6691234567"
+                      placeholder={t('auth.login.identifierPlaceholder')}
                     />
                   </div>
                 </Field>
@@ -178,13 +179,12 @@ const LoginPage = () => {
                       className="mt-1 text-base"
                     />
                     <span>
-                      Acepto recibir mensajes SMS para autenticación y notificaciones de AlphaVet.
-                      Pueden aplicarse cargos de mi operador.
+                      {t('auth.login.smsConsent')}
                     </span>
                   </label>
                 )}
                 {isEmail(identifier) && (
-                  <Field label="Contraseña" required>
+                  <Field label={t('auth.login.passwordLabel')} required>
                     <div className="relative">
                       <Lock className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
                       <Input
@@ -210,7 +210,7 @@ const LoginPage = () => {
                 )}
 
                 <Button type="submit" className="w-full">
-                  {loading ? <Loader /> : "Continuar"}
+                  {loading ? <Loader /> : t('auth.login.continueBtn')}
                 </Button>
 
                 {/* <Button onClick={() => signIn("google")}>
@@ -224,7 +224,7 @@ const LoginPage = () => {
 
               <form onSubmit={handleVerifyOtp} className="space-y-5">
 
-                <Field label="Código SMS">
+                <Field label={t('auth.login.smsCodeLabel')}>
                   <div className="relative">
                     <Smartphone className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
                     <Input
@@ -237,7 +237,7 @@ const LoginPage = () => {
                 </Field>
 
                 <Button type="submit" className="w-full">
-                  {loading ? <Loader /> : "Verificar código"}
+                  {loading ? <Loader /> : t('auth.login.verifyCodeBtn')}
                 </Button>
 
               </form>
@@ -246,10 +246,10 @@ const LoginPage = () => {
           </Card>
 
           <p className="mt-8 text-center text-sm text-slate-500">
-            ¿No tienes cuenta?{' '}
-            <a href="/auth/signup" className="font-medium text-blue-600 hover:underline">
-              Crear cuenta
-            </a>
+            {t('auth.login.noAccount')}{' '}
+            <Link href="/auth/signup" className="font-medium text-blue-600 hover:underline">
+              {t('auth.login.createAccount')}
+            </Link>
           </p>
 
         </div>

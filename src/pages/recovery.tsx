@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 import axios from "axios"
 import { Mail, Smartphone, Lock, Loader, Eye, EyeOff } from "lucide-react"
 import { signIn } from "next-auth/react"
+import { useTranslation } from "react-i18next"
 
 import Card from "@/components/ui/Card"
 import Field from "@/components/ui/Field"
@@ -17,7 +18,7 @@ type Step =
     | "reset-password"
 
 export default function RecoveryPage() {
-
+    const { t } = useTranslation('common')
     const router = useRouter()
     const emailFromUrl = router.query.email as string | undefined
 
@@ -34,8 +35,11 @@ export default function RecoveryPage() {
     useEffect(() => {
 
         if (emailFromUrl) {
-            setIdentifier(emailFromUrl)
-            setStep("reset-password")
+            const timer = setTimeout(() => {
+                setIdentifier(emailFromUrl)
+                setStep("reset-password")
+            }, 0)
+            return () => clearTimeout(timer)
         }
 
     }, [emailFromUrl])
@@ -89,13 +93,13 @@ export default function RecoveryPage() {
                 return
             }
 
-            setError("Ingresa un email o teléfono válido")
+            setError(t('auth.recovery.errors.invalidInput'))
 
         } catch (err: any) {
 
             setError(
                 err?.response?.data?.message ||
-                "Usuario no encontrado"
+                t('auth.recovery.errors.userNotFound')
             )
 
         }
@@ -133,7 +137,7 @@ export default function RecoveryPage() {
 
         } catch {
 
-            setError("Código incorrecto")
+            setError(t('auth.recovery.errors.invalidCode'))
 
         }
 
@@ -169,7 +173,7 @@ export default function RecoveryPage() {
 
             setError(
                 err?.response?.data?.message ||
-                "No se pudo actualizar la contraseña"
+                t('auth.recovery.errors.updateFailed')
             )
 
         }
@@ -187,12 +191,11 @@ export default function RecoveryPage() {
 
                 <div className="absolute bottom-0 left-0 p-12 w-full text-white">
                     <p className="text-2xl font-medium leading-snug tracking-tight max-w-lg">
-                        “Cuidamos a quienes más amas con la mejor tecnología y el cariño que
-                        merecen.”
+                        {t('auth.login.quote')}
                     </p>
 
                     <div className="mt-6 text-sm text-slate-300">
-                        Más de 2,000 dueños felices
+                        {t('auth.login.happyOwners')}
                     </div>
                 </div>
             </div>
@@ -202,11 +205,11 @@ export default function RecoveryPage() {
 
                     <div className="mb-8">
                         <h1 className="text-2xl font-semibold text-black tracking-tight">
-                            Activar cuenta
+                            {t('auth.recovery.title')}
                         </h1>
 
                         <p className="text-sm text-slate-500 mt-2">
-                            Ingresa tu email o teléfono
+                            {t('auth.recovery.subtitle')}
                         </p>
                     </div>
 
@@ -216,7 +219,7 @@ export default function RecoveryPage() {
 
                             <form onSubmit={handleRequestRecovery} className="space-y-5">
 
-                                <Field label="Email o Teléfono">
+                                <Field label={t('auth.login.identifierLabel')}>
 
                                     <div className="relative">
 
@@ -230,7 +233,7 @@ export default function RecoveryPage() {
                                             value={identifier}
                                             onChange={(e) => setIdentifier(e.target.value)}
                                             className="pl-9"
-                                            placeholder="correo o 6691234567"
+                                            placeholder={t('auth.login.identifierPlaceholder')}
                                         />
 
                                     </div>
@@ -242,7 +245,7 @@ export default function RecoveryPage() {
                                 )}
 
                                 <Button type="submit" className="w-full">
-                                    {loading ? <Loader /> : "Continuar"}
+                                    {loading ? <Loader /> : t('auth.login.continueBtn')}
                                 </Button>
 
                             </form>
@@ -253,7 +256,7 @@ export default function RecoveryPage() {
 
                             <form onSubmit={handleVerifyOtp} className="space-y-5">
 
-                                <Field label="Código SMS">
+                                <Field label={t('auth.login.smsCodeLabel')}>
 
                                     <div className="relative">
 
@@ -269,7 +272,7 @@ export default function RecoveryPage() {
                                     </div>
                                     {cooldown > 0 ? (
                                         <p className="text-sm text-slate-500">
-                                            Reenviar código en {cooldown}s
+                                            {t('auth.recovery.resendCodeIn', { cooldown })}
                                         </p>
                                     ) : (
                                         <button
@@ -277,7 +280,7 @@ export default function RecoveryPage() {
                                             className="text-sm text-blue-600"
                                             onClick={handleRequestRecovery}
                                         >
-                                            Reenviar código
+                                            {t('auth.recovery.resendCode')}
                                         </button>
                                     )}
                                 </Field>
@@ -287,7 +290,7 @@ export default function RecoveryPage() {
                                 )}
 
                                 <Button type="submit" className="w-full">
-                                    {loading ? <Loader /> : "Verificar código"}
+                                    {loading ? <Loader /> : t('auth.login.verifyCodeBtn')}
                                 </Button>
 
                             </form>
@@ -298,7 +301,7 @@ export default function RecoveryPage() {
 
                             <form onSubmit={handleResetPassword} className="space-y-5">
 
-                                <Field label="Nueva contraseña">
+                                <Field label={t('auth.recovery.newPasswordLabel')}>
 
                                     <div className="relative">
 
@@ -329,7 +332,7 @@ export default function RecoveryPage() {
                                 )}
 
                                 <Button type="submit" className="w-full">
-                                    {loading ? <Loader /> : "Crear contraseña"}
+                                    {loading ? <Loader /> : t('auth.recovery.createPasswordBtn')}
                                 </Button>
 
                             </form>
@@ -344,3 +347,13 @@ export default function RecoveryPage() {
         </main>
     )
 }
+
+import { serverSideTranslations } from 'next-i18next/pages/serverSideTranslations'
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  }
+}

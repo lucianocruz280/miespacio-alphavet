@@ -5,12 +5,13 @@ import Footer from '@/components/landing/Footer'
 import Gallery from '@/components/landing/Gallery'
 import Header from '@/components/landing/Header'
 import HeroSlider from '@/components/landing/hero/HeroCover'
-import ModernHero from '@/components/landing/ModernHero'
 import Pricing from '@/components/landing/Pricing'
 import ServicesGrid from '@/components/landing/ServicesGrid'
 import Testimonials from '@/components/landing/Testimonials'
 import WhyUs from '@/components/landing/WhyUs'
 
+
+import { serverSideTranslations } from 'next-i18next/pages/serverSideTranslations'
 
 const Page = () => {
     return (
@@ -28,5 +29,11 @@ const Page = () => {
         </main>
     )
 }
+
+export const getStaticProps = async ({ locale }: { locale: string }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default Page

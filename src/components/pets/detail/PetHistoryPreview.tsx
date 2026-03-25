@@ -9,16 +9,18 @@ type HistoryItem = {
 }
 
 import Link from "next/link"
+import { useTranslation } from "react-i18next"
 
 const PetHistoryPreview = ({ items }: { items: HistoryItem[] }) => {
+  const { t } = useTranslation('common')
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
       <div className="px-6 py-5 border-b border-slate-100 flex justify-between">
         <h2 className="text-base font-semibold text-slate-900">
-          Historial reciente
+          {t("pets.detail.history.title")}
         </h2>
         <button className="text-sm font-medium text-blue-600 hover:text-blue-700">
-          Ver historial completo
+          {t("pets.detail.history.viewAll")}
         </button>
       </div>
 

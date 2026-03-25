@@ -7,12 +7,15 @@ type PetInfoCardProps = {
   items: InfoItem[]
 }
 
+import { useTranslation } from "react-i18next"
+
 const PetInfoCard = ({ items }: PetInfoCardProps) => {
+  const { t } = useTranslation('common')
   return (
     <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
       <div className="px-6 py-5 border-b border-slate-100">
         <h2 className="text-base font-semibold text-slate-900">
-          Información de la mascota
+          {t("pets.detail.infoCard.title")}
         </h2>
       </div>
 

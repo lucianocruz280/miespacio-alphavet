@@ -1,4 +1,5 @@
 import useAxios from "@/hooks/useAxios"
+import { useTranslation } from "react-i18next"
 
 type TimeSlotSelectorProps = {
   branchId: string
@@ -19,6 +20,7 @@ const TimeSlotSelector = ({
   branchId,
   veterinarianId
 }: TimeSlotSelectorProps) => {
+  const { t } = useTranslation('common')
   const { data, loading } = useAxios<Schedule>({
     method: "get",
     url: "appointments/public-available-slots",
@@ -32,13 +34,13 @@ const TimeSlotSelector = ({
   const times: string[] = data?.data ?? []
   console.log(data, date)
   if (loading) {
-    return <p className="text-sm text-slate-500">Cargando horarios…</p>
+    return <p className="text-sm text-slate-500">{t('appointments.schedule.timeSlot.loading')}</p>
   }
 
   if (!times.length) {
     return (
       <p className="text-sm text-slate-500">
-        No hay horarios disponibles para este día
+        {t('appointments.schedule.timeSlot.empty')}
       </p>
     )
   }
@@ -46,7 +48,7 @@ const TimeSlotSelector = ({
   return (
     <div>
       <h3 className="text-sm font-medium text-slate-900 mb-4">
-        Horarios disponibles
+        {t('appointments.schedule.timeSlot.title')}
       </h3>
 
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">

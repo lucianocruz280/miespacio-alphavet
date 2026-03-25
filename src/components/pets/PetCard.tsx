@@ -1,5 +1,6 @@
 import { Calendar, ArrowRight } from "lucide-react"
 import { useRouter } from "next/router"
+import { useTranslation } from "react-i18next"
 
 type PetCardProps = {
   id: string
@@ -25,6 +26,8 @@ const PetCard = ({
   onSelect,
 }: PetCardProps) => {
   const router = useRouter()
+  const { t } = useTranslation('common')
+
   const handleClick = () => {
     if (selectable && onSelect) {
       onSelect()
@@ -65,7 +68,7 @@ const PetCard = ({
 
         <div className="flex items-center gap-1.5 text-xs text-slate-400 group-hover:text-slate-500 transition-colors bg-slate-50 w-fit px-2 py-1 rounded-md border border-slate-100">
           <Calendar className="w-3 h-3" />
-          <span>Última visita: {lastVisit}</span>
+          <span>{t('pets.petCard.lastVisit', { date: lastVisit })}</span>
         </div>
       </div>
 

@@ -2,6 +2,7 @@ import PetCard from "./PetCard"
 import AddPetCard from "./AddPetCard"
 import useAxios from "@/hooks/useAxios"
 import { Pet, PetResponse } from "@/types/Pets"
+import { useTranslation } from "react-i18next"
 
 const getAgeYears = (birthDate?: string) => {
     if (!birthDate) return null
@@ -15,18 +16,19 @@ const getAgeYears = (birthDate?: string) => {
     return age
 }
 
-export const buildMeta = (pet: any) => {
-    const age = getAgeYears(pet.birthDate)
+export const buildMeta = (pet: Partial<Pet>, t: (key: string, options?: any) => string) => {
+    const age = getAgeYears(pet.birthDate ?? undefined)
     return [
         pet.breed,
         pet.weight ? `${pet.weight}kg` : null,
-        age ? `${age} años` : null,
+        age ? t("pets.petsGrid.yearsOld", { count: age }) : null,
     ]
         .filter(Boolean)
         .join(" • ")
 }
 
 const PetsGrid = () => {
+    const { t } = useTranslation('common')
     const { data, loading } = useAxios({
         method: "get",
         url: "pets",
@@ -51,12 +53,12 @@ const PetsGrid = () => {
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {pets.map((pet: any) => (
+            {pets.map((pet: Pet) => (
                 <PetCard
                     key={pet.id}
                     id={pet.id}
                     name={pet.name}
-                    meta={buildMeta(pet)}
+                    meta={buildMeta(pet, t)}
                     lastVisit="—"
                     imageUrl={pet.photo}
                     statusColor={pet.isPrimaryOwner ? "emerald" : "amber"}

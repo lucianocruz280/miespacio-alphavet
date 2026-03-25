@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react"
 import ClinicConfirmationView from "../ClinicConfirmationView"
 import { useState } from "react"
 import CardPaymentForm from "../cards/CardPaymentForm"
+import { useTranslation } from "react-i18next"
 
 
 type StepPaymentProps = {
@@ -19,6 +20,7 @@ const StepPayment = ({
     onPrev,
     onConfirm,
 }: StepPaymentProps) => {
+    const { t } = useTranslation('common')
     const [view, setView] = useState<"FORM" | "CONFIRMED">("FORM")
     const [loading, setLoading] = useState(false)
 
@@ -58,16 +60,16 @@ const StepPayment = ({
 
             <div>
                 <h1 className="text-2xl font-semibold text-slate-900 tracking-tight mb-2">
-                    Pago y Confirmación
+                    {t('appointments.paymentStep.title')}
                 </h1>
                 <p className="text-slate-500">
-                    Selecciona cómo deseas pagar tu cita.
+                    {t('appointments.paymentStep.subtitle')}
                 </p>
             </div>
 
             <div className="space-y-4">
                 <label className="block text-sm font-medium text-slate-900">
-                    Método de pago
+                    {t('appointments.paymentStep.methodLabel')}
                 </label>
 
                 <div className="space-y-3">
@@ -89,10 +91,10 @@ const StepPayment = ({
 
                             <div className="text-left">
                                 <div className="font-medium text-slate-900">
-                                    Pagar en clínica
+                                    {t('appointments.paymentStep.methods.clinic.title')}
                                 </div>
                                 <div className="text-xs text-slate-500">
-                                    Efectivo o tarjeta al llegar
+                                    {t('appointments.paymentStep.methods.clinic.subtitle')}
                                 </div>
                             </div>
                         </div>
@@ -161,14 +163,14 @@ const StepPayment = ({
                     className="text-slate-500 hover:text-slate-900 font-medium px-4 py-2 rounded-lg
             hover:bg-slate-100 transition-all"
                 >
-                    Atrás
+                    {t('appointments.paymentStep.backBtn')}
                 </button>
 
                 <Button
                     disabled={!draft.paymentMethod || loading}
                     onClick={handleConfirm}
                 >
-                    {loading ? "Confirmando..." : "Confirmar cita"}
+                    {loading ? t('appointments.paymentStep.confirmingBtn') : t('appointments.paymentStep.confirmBtn')}
                 </Button>
             </div>
 

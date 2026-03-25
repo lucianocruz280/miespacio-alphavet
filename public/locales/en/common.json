@@ -1,0 +1,330 @@
+{
+  "header": {
+    "services": "Services",
+    "about": "About Us",
+    "contact": "Contact",
+    "login": "Login",
+    "signup": "Sign Up",
+    "openMenu": "Open menu"
+  },
+  "auth": {
+    "login": {
+      "errors": {
+        "smsRequired": "You must accept receiving SMS to continue",
+        "invalidCreds": "Invalid credentials",
+        "invalidInput": "Enter a valid email or phone number",
+        "generalError": "An error occurred",
+        "invalidCode": "Incorrect code"
+      },
+      "quote": "\"We care for those you love most with the best technology and the affection they deserve.\"",
+      "happyOwners": "Over 2,000 happy owners",
+      "title": "Sign in",
+      "subtitle": "Access your AlphaVet account",
+      "identifierLabel": "Email or Phone",
+      "identifierPlaceholder": "email or 6691234567",
+      "smsConsent": "I agree to receive SMS messages for authentication and notifications from AlphaVet. Carrier charges may apply.",
+      "passwordLabel": "Password",
+      "continueBtn": "Continue",
+      "smsCodeLabel": "SMS Code",
+      "verifyCodeBtn": "Verify code",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create account"
+    },
+    "signup": {
+      "errors": {
+        "nameRequired": "Enter your name",
+        "invalidEmail": "Enter a valid email",
+        "passwordMinLength": "Password must be at least 8 characters",
+        "passwordsDontMatch": "Passwords do not match",
+        "termsRequired": "You must accept the terms and conditions",
+        "emailExists": "This email is already registered",
+        "phoneExists": "This phone number is already registered",
+        "registerError": "Error registering user",
+        "unexpectedError": "Unexpected error"
+      },
+      "quote": "\"Create your account and keep your pet's history, vaccines and appointments in one place.\"",
+      "happyOwners": "Over 2,000 happy owners",
+      "title": "Create account",
+      "subtitle": "Sign up to manage your pets, history and appointments.",
+      "nameLabel": "Full Name",
+      "namePlaceholder": "John Doe",
+      "emailLabel": "Email",
+      "emailPlaceholder": "user@alphavet.com",
+      "phoneLabel": "Phone (optional)",
+      "phonePlaceholder": "6691234567",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "passwordHint": "Minimum 8 characters",
+      "confirmPasswordLabel": "Confirm password",
+      "termsLabel": "I accept the terms and conditions",
+      "submitBtn": "Create account",
+      "hasAccount": "Already have an account?",
+      "loginBtn": "Sign in"
+    },
+    "recovery": {
+      "errors": {
+        "invalidInput": "Enter a valid email or phone number",
+        "userNotFound": "User not found",
+        "invalidCode": "Incorrect code",
+        "updateFailed": "Could not update the password"
+      },
+      "title": "Activate account",
+      "subtitle": "Enter your email or phone",
+      "resendCodeIn": "Resend code in {{cooldown}}s",
+      "resendCode": "Resend code",
+      "newPasswordLabel": "New password",
+      "createPasswordBtn": "Create password"
+    }
+  },
+  "appointments": {
+    "header": {
+      "title": "New Appointment",
+      "subtitle": "Basic information > Schedule > Payment",
+      "stepper": {
+        "baseInfo": "Basic Information",
+        "schedule": "Schedule",
+        "extras": "Extras",
+        "payment": "Payment"
+      }
+    },
+    "loading": "Loading...",
+    "stepProgress": "Step {{current}} of {{total}}",
+    "steps": {
+      "base": "Basic information",
+      "schedule": "Date and time",
+      "extras": "Extras",
+      "payment": "Payment"
+    },
+    "baseInfo": {
+      "newPetBtn": "+ New pet",
+      "title": "Let's start",
+      "subtitle": "Select the pet, the branch and the type of service.",
+      "petLabel": "Pet",
+      "branchLabel": "Branch",
+      "serviceLabel": "Service type",
+      "services": {
+        "CONSULTA": "General Consultation",
+        "VACUNA": "Vaccination",
+        "OTRO": "Deworming",
+        "REVISION": "Checkup"
+      },
+      "backBtn": "Back",
+      "continueBtn": "Continue"
+    },
+    "schedule": {
+      "title": "Date and time",
+      "subtitle": "Choose the day and time that best suits you.",
+      "dateLabel": "Date",
+      "timeLabel": "Time",
+      "editBtn": "Edit",
+      "backBtn": "Back",
+      "continueBtn": "Continue",
+      "days": ["MO", "TU", "WE", "TH", "FR", "SA", "SU"],
+      "timeSlot": {
+        "loading": "Loading timeslots…",
+        "empty": "No timeslots available for this day",
+        "title": "Available timeslots"
+      },
+      "vet": {
+        "title": "Veterinarian",
+        "any": "Anyone available",
+        "anyDescription": "The first one to be free"
+      }
+    },
+    "extrasStep": {
+      "title": "Extras",
+      "subtitle": "Add a promotional code or notes for the veterinarian.",
+      "promoCode": "Promotional code",
+      "promoPlaceholder": "Ex. WELCOME10",
+      "applyBtn": "Apply",
+      "notes": "Additional notes (optional)",
+      "notesPlaceholder": "Anything we should know about your pet?",
+      "backBtn": "Back",
+      "continueBtn": "Continue"
+    },
+    "paymentStep": {
+      "title": "Payment and Confirmation",
+      "subtitle": "Select how you would like to pay for your appointment.",
+      "methodLabel": "Payment method",
+      "methods": {
+        "clinic": {
+          "title": "Pay at clinic",
+          "subtitle": "Cash or card upon arrival"
+        }
+      },
+      "backBtn": "Back",
+      "confirmingBtn": "Confirming...",
+      "confirmBtn": "Confirm appointment"
+    },
+    "clinicConfirmation": {
+      "title": "Appointment confirmed!",
+      "subtitle": "Payment will be made directly at the clinic.",
+      "petLabel": "Pet",
+      "serviceLabel": "Service",
+      "branchLabel": "Branch",
+      "dateLabel": "Date",
+      "timeLabel": "Time",
+      "vetLabel": "Veterinarian",
+      "anyVet": "Anyone available",
+      "reminderText": "We will send you a reminder before your appointment.",
+      "viewAppointmentsBtn": "View my appointments"
+    }
+  },
+  "pets": {
+    "addPetCard": {
+      "title": "Add new pet",
+      "subtitle": "Register new profile"
+    },
+    "petCard": {
+      "lastVisit": "Last visit: {{date}}"
+    },
+    "petsGrid": {
+      "yearsOld": "{{count}} years old"
+    },
+    "createView": {
+      "title": "Add pet",
+      "subtitle": "Register your pet to schedule appointments, save records, and receive reminders.",
+      "clientPortal": "Client Portal",
+      "photoSection": {
+        "title": "Pet photo",
+        "subtitle": "Optional, you can upload it later.",
+        "uploading": "Uploading..."
+      },
+      "basicInfo": {
+        "title": "Basic information",
+        "nameLabel": "Name",
+        "namePlaceholder": "E.g. Bruno",
+        "speciesLabel": "Species",
+        "breedLabel": "Breed",
+        "genderLabel": "Gender",
+        "ageLabel": "Age (years)",
+        "agePlaceholder": "E.g. 2",
+        "weightLabel": "Weight (kg)",
+        "weightPlaceholder": "E.g. 12.5"
+      },
+      "additionalDetails": {
+        "title": "Additional details",
+        "colorLabel": "Color / distinct marks",
+        "microchipLabel": "Microchip ID",
+        "microchipPlaceholder": "If they don't have a microchip, leave blank",
+        "notesLabel": "Notas"
+      },
+      "actions": {
+        "editLaterMsg": "You can edit these details later from the pet's profile.",
+        "cancelBtn": "Cancel",
+        "saveBtn": "Save pet",
+        "savingBtn": "Saving..."
+      },
+      "errors": {
+        "nameRequired": "Name is required",
+        "speciesRequired": "Please select a species",
+        "breedRequired": "Please select a breed",
+        "genderRequired": "Please select a gender",
+        "saveError": "Error saving pet"
+      },
+      "genderOptions": {
+        "select": "Select...",
+        "male": "Male",
+        "female": "Female"
+      }
+    },
+    "detail": {
+      "header": {
+        "species": {
+          "dog": "Canine",
+          "cat": "Feline",
+          "bird": "Bird",
+          "rabbit": "Rabbit",
+          "rodent": "Rodent",
+          "fish": "Fish",
+          "reptile": "Reptile",
+          "other": "Pet"
+        },
+        "scheduleBtn": "Schedule Appointment",
+        "editBtn": "Edit Profile"
+      },
+      "infoCard": {
+        "title": "Pet Information"
+      },
+      "medicalSummary": {
+        "title": "Health Status",
+        "vaccines": {
+          "title": "Vaccines",
+          "noRecord": "No record",
+          "upToDate": "Up to date",
+          "pending": "Pending"
+        },
+        "lastVisit": {
+          "title": "Last Visit",
+          "noVisit": "No visits recorded"
+        },
+        "allergies": {
+          "title": "Allergies",
+          "noAllergies": "No allergies recorded"
+        },
+        "notes": {
+          "title": "Notes"
+        }
+      },
+      "history": {
+        "title": "Recent History",
+        "viewAll": "View full history"
+      }
+    }
+  },
+  "services": {
+    "detail": {
+      "title": "Service Detail",
+      "completed": "Completed",
+      "types": {
+        "grooming": "Grooming Service",
+        "medical": "Medical Consultation"
+      },
+      "pet": "Pet",
+      "mainBranch": "Main Branch",
+      "attendedBy": "Attended by",
+      "notes": {
+        "groomingTitle": "Service Notes",
+        "medicalTitle": "Reason for Consultation",
+        "empty": "No additional notes."
+      },
+      "diagnosis": "Diagnosis",
+      "treatment": "Treatment",
+      "followUp": "Recommended Follow-up",
+      "prescriptions": {
+        "title": "Medical Prescriptions",
+        "dose": "Dose",
+        "frequency": "Frequency",
+        "everyXHours": "Every {{hours}} hours",
+        "duration": "Duration",
+        "xDias": "{{days}} days"
+      },
+      "items": {
+        "title": "Applied Services/Products",
+        "concept": "Concept",
+        "quantity": "Quantity",
+        "defaultService": "Service"
+      }
+    },
+    "card": {
+      "duration": "Duration",
+      "from": "from"
+    },
+    "list": {
+      "empty": {
+        "title": "No recent services",
+        "description": "Your pets' medical and grooming history will appear here."
+      },
+      "types": {
+        "spaDay": "Spa Day",
+        "medical": "Medical Consultation"
+      },
+      "for": "for",
+      "categories": {
+        "grooming": "Grooming",
+        "general": "General Consultation"
+      },
+      "completed": "Completed"
+    }
+  }
+}

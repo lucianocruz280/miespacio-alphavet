@@ -1,5 +1,6 @@
 import Button from "@/components/ui/Button"
 import { CheckCircle } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 type ClinicConfirmationViewProps = {
   draft: {
@@ -17,6 +18,7 @@ const ClinicConfirmationView = ({
   draft,
   onFinish,
 }: ClinicConfirmationViewProps) => {
+  const { t } = useTranslation('common')
   return (
     <section className="max-w-3xl mx-auto">
 
@@ -27,66 +29,66 @@ const ClinicConfirmationView = ({
 
         <div>
           <h1 className="text-2xl font-semibold text-slate-900">
-            ¡Cita confirmada!
+            {t('appointments.clinicConfirmation.title')}
           </h1>
           <p className="text-slate-500 mt-1">
-            El pago se realizará directamente en la clínica.
+            {t('appointments.clinicConfirmation.subtitle')}
           </p>
         </div>
 
         <div className="bg-slate-50 rounded-xl p-5 text-left space-y-3 text-sm">
 
           <div className="flex justify-between">
-            <span className="text-slate-500">Mascota</span>
+            <span className="text-slate-500">{t('appointments.clinicConfirmation.petLabel')}</span>
             <span className="font-medium text-slate-900">
               {draft.petId || "—"}
             </span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-slate-500">Servicio</span>
+            <span className="text-slate-500">{t('appointments.clinicConfirmation.serviceLabel')}</span>
             <span className="font-medium text-slate-900">
               {draft.serviceType || "—"}
             </span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-slate-500">Sucursal</span>
+            <span className="text-slate-500">{t('appointments.clinicConfirmation.branchLabel')}</span>
             <span className="font-medium text-slate-900">
               {draft.branchId || "—"}
             </span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-slate-500">Fecha</span>
+            <span className="text-slate-500">{t('appointments.clinicConfirmation.dateLabel')}</span>
             <span className="font-medium text-blue-600">
               {draft.date || "—"}
             </span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-slate-500">Hora</span>
+            <span className="text-slate-500">{t('appointments.clinicConfirmation.timeLabel')}</span>
             <span className="font-medium text-blue-600">
               {draft.time || "—"}
             </span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-slate-500">Veterinario</span>
+            <span className="text-slate-500">{t('appointments.clinicConfirmation.vetLabel')}</span>
             <span className="font-medium text-slate-900">
-              {draft.vetId || "Cualquiera disponible"}
+              {draft.vetId || t('appointments.clinicConfirmation.anyVet')}
             </span>
           </div>
         </div>
 
         <p className="text-sm text-slate-400">
-          Te enviaremos un recordatorio antes de tu cita.
+          {t('appointments.clinicConfirmation.reminderText')}
         </p>
 
  
         <div className="pt-4">
           <Button onClick={onFinish}>
-            Ver mis citas
+            {t('appointments.clinicConfirmation.viewAppointmentsBtn')}
           </Button>
         </div>
       </div>

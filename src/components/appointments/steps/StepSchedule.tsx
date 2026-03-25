@@ -1,15 +1,10 @@
 import CalendarSelector from "../CalendarSelector"
 import TimeSlotSelector from "../TimeSlotSelector"
-import Button from "@/components/ui/Button"
 import VeterinarianSelector from "../VeterinarianSelector"
+import Button from "@/components/ui/Button"
+import { AppointmentDraft } from "@/types/appointments"
+import { useTranslation } from "react-i18next"
 import useAxios from "@/hooks/useAxios"
-
-type AppointmentDraft = {
-  branchId?: string
-  date?: string
-  time?: string
-  vetId?: string
-}
 
 type DoctorResponse = {
   user: {
@@ -32,7 +27,7 @@ const StepSchedule = ({
   onNext,
   onPrev,
 }: StepScheduleProps) => {
-
+  const { t } = useTranslation('common')
   const canContinue = !!draft.date && !!draft.time
 
   const { data: doctors } = useAxios<DoctorResponse[]>(
@@ -44,11 +39,11 @@ const StepSchedule = ({
     [draft.branchId]
   )
 
-  const vets = (doctors ?? []).map((doc) => ({
+  const availableVets = doctors?.map((doc: DoctorResponse) => ({
     id: doc.user.id,
-    name: doc.user.name,
+    name: doc.user.name || "Doctor",
     avatarUrl: doc.user.avatarUrl
-  }))
+  })) ?? []
 
   const handleVetSelect = (vetId?: string) => {
     onChange({
@@ -62,17 +57,17 @@ const StepSchedule = ({
 
       <div>
         <h1 className="text-2xl font-semibold text-slate-900">
-          Fecha y horario
+          {t('appointments.schedule.title')}
         </h1>
         <p className="text-slate-500 mt-1">
-          Elige el día y la hora que mejor te convenga.
+          {t('appointments.schedule.subtitle')}
         </p>
       </div>
 
       {/* ================= DOCTOR ================= */}
 
       <VeterinarianSelector
-        vets={vets}
+        vets={availableVets}
         selectedVetId={draft.vetId}
         onSelect={handleVetSelect}
       />
@@ -83,10 +78,10 @@ const StepSchedule = ({
 
         <details open={!draft.date} className="bg-white rounded-xl border">
           <summary className="cursor-pointer px-4 py-3 font-medium">
-            Fecha
+            {t('appointments.schedule.dateLabel')}
             {draft.date && (
               <span className="ml-2 text-sm text-blue-600">
-                {draft.date} · Editar
+                {draft.date} · {t('appointments.schedule.editBtn')}
               </span>
             )}
           </summary>
@@ -104,10 +99,10 @@ const StepSchedule = ({
         {draft.date && (
           <details open={!draft.time} className="bg-white rounded-xl border">
             <summary className="cursor-pointer px-4 py-3 font-medium">
-              Horario
+              {t('appointments.schedule.timeLabel')}
               {draft.time && (
                 <span className="ml-2 text-sm text-blue-600">
-                  {draft.time} · Editar
+                  {draft.time} · {t('appointments.schedule.editBtn')}
                 </span>
               )}
             </summary>
@@ -153,14 +148,14 @@ const StepSchedule = ({
 
       <div className="pt-6 border-t border-slate-100 flex justify-between">
         <Button variant="ghost" onClick={onPrev}>
-          Atrás
+          {t('appointments.schedule.backBtn')}
         </Button>
 
         <Button
           disabled={!canContinue}
           onClick={onNext}
         >
-          Continuar
+          {t('appointments.schedule.continueBtn')}
         </Button>
       </div>
 

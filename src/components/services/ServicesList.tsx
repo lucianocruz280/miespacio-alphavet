@@ -2,15 +2,17 @@ import useAxios from "@/hooks/useAxios"
 import Card from "@/components/ui/Card"
 import { Calendar, Stethoscope, Scissors, CheckCircle } from "lucide-react"
 import Link from "next/link"
+import { useTranslation } from "react-i18next"
 
 const ServicesList = () => {
+  const { t } = useTranslation('common')
   const { data, loading } = useAxios({
     method: "get",
     url: "myspace/services",
   })
 
   // The endpoint returns { success: true, data: [...] }
-  const services = (data as any)?.data ?? []
+  const services = (data as { data: any[] })?.data ?? []
 
   if (loading) {
     return (
@@ -26,9 +28,9 @@ const ServicesList = () => {
     return (
       <div className="text-center py-12 px-4 rounded-xl border border-dashed border-slate-300">
         <CheckCircle className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-        <h3 className="text-lg font-medium text-slate-900">No hay servicios recientes</h3>
+        <h3 className="text-lg font-medium text-slate-900">{t("services.list.empty.title")}</h3>
         <p className="text-slate-500 mt-1">
-          Aquí aparecerá el historial de consultas médicas y estética de tus mascotas.
+          {t("services.list.empty.description")}
         </p>
       </div>
     )
@@ -36,7 +38,7 @@ const ServicesList = () => {
 
   return (
     <div className="grid gap-4">
-      {services.map((svc: any) => {
+      {services.map((svc: Record<string, any>) => {
         const date = new Date(svc.historicalDate)
         const isGrooming = svc.serviceCategory === 'GROOMING'
         
@@ -50,10 +52,10 @@ const ServicesList = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-slate-900">
-                    {isGrooming ? "Día de Spa" : "Consulta Médica"} para {svc.pet?.name}
+                    {isGrooming ? t("services.list.types.spaDay") : t("services.list.types.medical")} {t("services.list.for")} {svc.pet?.name}
                   </h3>
                   <p className="text-sm text-slate-500 capitalize">
-                    {isGrooming ? "Estética" : (svc.type ? svc.type.toLowerCase() : "Consulta General")}
+                    {isGrooming ? t("services.list.categories.grooming") : (svc.type ? svc.type.toLowerCase() : t("services.list.categories.general"))}
                   </p>
                 </div>
               </div>
@@ -68,7 +70,7 @@ const ServicesList = () => {
               </div>
               
               <div className="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-full text-slate-700 text-xs font-medium">
-                Completado
+                {t("services.list.completed")}
               </div>
             </div>
           </Card>

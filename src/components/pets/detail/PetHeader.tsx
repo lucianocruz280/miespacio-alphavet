@@ -13,6 +13,7 @@ import {
 import Card from "@/components/ui/Card"
 import Button from "@/components/ui/Button"
 import Badge from "@/components/ui/Badge"
+import { useTranslation } from "react-i18next"
 
 type PetHeaderProps = {
   name: string
@@ -23,43 +24,18 @@ type PetHeaderProps = {
   onScheduleClick?: () => void
 }
 
-const speciesConfig: Record<
-  string,
-  { label: string; icon: any }
-> = {
-  Perro: {
-    label: "Canino",
-    icon: Dog,
-  },
-  Gato: {
-    label: "Felino",
-    icon: Cat,
-  },
-  Ave: {
-    label: "Ave",
-    icon: Bird,
-  },
-  Conejo: {
-    label: "Conejo",
-    icon: Rabbit,
-  },
-  Hámster: {
-    label: "Roedor",
-    icon: PawPrint,
-  },
-  Pez: {
-    label: "Pez",
-    icon: Fish,
-  },
-  Reptil: {
-    label: "Reptil",
-    icon: Bug,
-  },
-  Otro: {
-    label: "Mascota",
-    icon: PawPrint,
-  },
-}
+import { TFunction } from "i18next"
+
+const getSpeciesConfig = (t: TFunction): Record<string, { label: string; icon: React.ElementType }> => ({
+  Perro: { label: t("pets.detail.header.species.dog"), icon: Dog },
+  Gato: { label: t("pets.detail.header.species.cat"), icon: Cat },
+  Ave: { label: t("pets.detail.header.species.bird"), icon: Bird },
+  Conejo: { label: t("pets.detail.header.species.rabbit"), icon: Rabbit },
+  Hámster: { label: t("pets.detail.header.species.rodent"), icon: PawPrint },
+  Pez: { label: t("pets.detail.header.species.fish"), icon: Fish },
+  Reptil: { label: t("pets.detail.header.species.reptile"), icon: Bug },
+  Otro: { label: t("pets.detail.header.species.other"), icon: PawPrint },
+})
 
 const PetHeader = ({
   name,
@@ -69,7 +45,8 @@ const PetHeader = ({
   onEditClick,
   onScheduleClick,
 }: PetHeaderProps) => {
-
+  const { t } = useTranslation('common')
+  const speciesConfig = getSpeciesConfig(t)
   const config = speciesConfig[species] || speciesConfig["Otro"]
 
   const SpeciesIcon = config.icon
@@ -121,12 +98,12 @@ const PetHeader = ({
 
             <Button onClick={onScheduleClick}>
               <CalendarPlus className="w-4 h-4" />
-              Agendar cita
+              {t("pets.detail.header.scheduleBtn")}
             </Button>
 
             <Button variant="secondary" onClick={onEditClick}>
               <Pencil className="w-4 h-4" />
-              Editar perfil
+              {t("pets.detail.header.editBtn")}
             </Button>
 
           </div>

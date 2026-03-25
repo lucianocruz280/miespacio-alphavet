@@ -1,12 +1,16 @@
 import { Plus } from "lucide-react"
 import { useRouter } from "next/router"
 import { FC } from "react"
+import { useTranslation } from "react-i18next"
+
 type Props = {
   classNames?: string
   hasReturn?: boolean
 }
 const AddPetCard: FC<Props> = ({ classNames, hasReturn }) => {
   const router = useRouter()
+  const { t } = useTranslation('common')
+
   const handleCreatePet = () => {
     if (hasReturn)
       router.push(`/pets/create?return=${encodeURIComponent(router.asPath)}`)
@@ -20,11 +24,11 @@ const AddPetCard: FC<Props> = ({ classNames, hasReturn }) => {
       </div>
 
       <span className="text-sm font-medium text-slate-900 group-hover:text-blue-700 transition-colors">
-        Agregar nueva mascota
+        {t('pets.addPetCard.title')}
       </span>
 
       <span className="text-xs text-slate-400 mt-1">
-        Registrar nuevo perfil
+        {t('pets.addPetCard.subtitle')}
       </span>
     </button>
   )

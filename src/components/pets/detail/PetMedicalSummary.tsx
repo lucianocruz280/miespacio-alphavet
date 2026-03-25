@@ -1,4 +1,5 @@
 import { ShieldCheck, CalendarCheck, AlertCircle } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 type PetMedicalSummaryProps = {
   vaccinesUpToDate?: boolean
@@ -13,6 +14,7 @@ const PetMedicalSummary = ({
   allergies,
   notes,
 }: PetMedicalSummaryProps) => {
+  const { t } = useTranslation('common')
 
   const formattedDate = lastVisit
     ? new Date(lastVisit).toLocaleDateString("es-MX", {
@@ -27,7 +29,7 @@ const PetMedicalSummary = ({
 
       <div className="px-6 py-5 border-b border-slate-100">
         <h2 className="text-base font-semibold text-slate-900">
-          Estado de salud
+          {t("pets.detail.medicalSummary.title")}
         </h2>
       </div>
 
@@ -35,13 +37,13 @@ const PetMedicalSummary = ({
 
         {/* Vacunas */}
         <StatusItem
-          title="Vacunas"
+          title={t("pets.detail.medicalSummary.vaccines.title")}
           description={
             vaccinesUpToDate === undefined
-              ? "Sin registro"
+              ? t("pets.detail.medicalSummary.vaccines.noRecord")
               : vaccinesUpToDate
-              ? "Al día"
-              : "Pendientes"
+              ? t("pets.detail.medicalSummary.vaccines.upToDate")
+              : t("pets.detail.medicalSummary.vaccines.pending")
           }
           icon={<ShieldCheck className="w-4 h-4 text-green-600" />}
           bg="bg-green-50 border-green-100"
@@ -49,19 +51,19 @@ const PetMedicalSummary = ({
 
         {/* Última visita */}
         <StatusItem
-          title="Última visita"
-          description={formattedDate || "Sin visitas registradas"}
+          title={t("pets.detail.medicalSummary.lastVisit.title")}
+          description={formattedDate || t("pets.detail.medicalSummary.lastVisit.noVisit")}
           icon={<CalendarCheck className="w-4 h-4 text-blue-600" />}
           bg="bg-blue-50 border-blue-100"
         />
 
         {/* Alergias */}
         <StatusItem
-          title="Alergias"
+          title={t("pets.detail.medicalSummary.allergies.title")}
           description={
             allergies && allergies.length > 0
               ? allergies.join(", ")
-              : "Sin alergias registradas"
+              : t("pets.detail.medicalSummary.allergies.noAllergies")
           }
           icon={<AlertCircle className="w-4 h-4 text-amber-600" />}
           bg="bg-amber-50 border-amber-100"
@@ -71,7 +73,7 @@ const PetMedicalSummary = ({
         {notes && (
           <div>
             <p className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2">
-              Notas
+              {t("pets.detail.medicalSummary.notes.title")}
             </p>
 
             <p className="text-sm text-slate-600 bg-slate-50 p-3 rounded-lg border border-slate-100">

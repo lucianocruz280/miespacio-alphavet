@@ -4,44 +4,38 @@ import ServiceTypeCard from "../cards/ServiceTypeCard"
 import Button from "@/components/ui/Button"
 import useAxios from "@/hooks/useAxios"
 import { PetResponse } from "@/types/Pets"
-import AddPetCard from "@/components/pets/AddPetCard"
+import { AppointmentDraft } from "@/types/appointments"
+import { useTranslation } from "react-i18next"
 import { useState } from "react"
-import { useRouter } from "next/router"
-
-type AppointmentDraft = {
-  petId?: string
-  branchId?: string
-  serviceType?: string
-}
-type MobileStage = "PET" | "BRANCH" | "SERVICE"
+import AddPetCard from "@/components/pets/AddPetCard"
 
 type StepBaseInfoProps = {
   draft: AppointmentDraft
   onChange: (patch: Partial<AppointmentDraft>) => void
   onNext: () => void
-  code: string
+  code?: string
 }
 
 const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
+  const { t } = useTranslation('common')
   const { data, loading } = useAxios({ method: "get", url: "pets" })
-  const router = useRouter()
   const pets = (data as PetResponse)?.data ?? []
   const [mobileStage, setMobileStage] = useState<"PET" | "BRANCH" | "SERVICE">("PET")
+
   const { data: modulesData } = useAxios({
     method: "get",
     url: "app-modules",
   })
 
-  const hospitalModule = (modulesData as any[])?.find(
+  const hospitalModule = (modulesData as { code: string; branches: { id: string, name: string, street?: string, exteriorNumber?: string }[] }[])?.find(
     (app) => app.code === code
   )
   const hospitalBranches = hospitalModule?.branches ?? []
-  const isMobile = true
+
   const canContinue =
     !!draft.petId &&
     !!draft.branchId &&
     !!draft.serviceType
-  console.log("pets", pets)
 
   const handlePetSelect = (petId: string) => {
     onChange({ petId })
@@ -57,32 +51,34 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
     onChange({ serviceType })
     onNext()
   }
-  if (loading) {
+
+  if (loading || !modulesData) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {Array.from({ length: 3 }).map((_, i) => (
           <div key={i} className="h-32 rounded-xl bg-slate-100 animate-pulse" />
         ))}
-        <AddPetCard classNames="hidden lg:flex" />
+        <AddPetCard classNames="hidden lg:flex" hasReturn />
 
         <button
           type="button"
           className="p-4 lg:hidden rounded-xl border border-dashed border-slate-300 bg-slate-50 hover:bg-white hover:border-slate-400 transition-all text-sm font-medium text-slate-500"
         >
-          + Nueva mascota
+          {t('appointments.baseInfo.newPetBtn')}
         </button>
       </div>
     )
   }
+
   return (
     <section className="space-y-10">
 
       <div>
         <h1 className="text-2xl font-semibold text-slate-900">
-          Comencemos
+          {t('appointments.baseInfo.title')}
         </h1>
         <p className="text-slate-500 mt-1">
-          Selecciona la mascota, la sucursal y el tipo de servicio.
+          {t('appointments.baseInfo.subtitle')}
         </p>
       </div>
 
@@ -90,7 +86,7 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
       <div className="lg:hidden">
         {mobileStage === "PET" && (
           <div className="space-y-4">
-            <h2 className="text-sm font-medium text-slate-900">Mascota</h2>
+            <h2 className="text-sm font-medium text-slate-900">{t('appointments.baseInfo.petLabel')}</h2>
 
             <div className="grid gap-4">
               {pets.map((pet) => (
@@ -103,22 +99,23 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
                 />
               ))}
 
-              <AddPetCard hasReturn={true} />
+              <AddPetCard classNames="hidden lg:flex" hasReturn />
             </div>
           </div>
         )}
       </div>
 
 
+      {/* DESKTOP – PET */}
       <div className="hidden lg:block space-y-4">
         <h2 className="text-sm font-medium text-slate-900">
-          Mascota
+          {t('appointments.baseInfo.petLabel')}
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {pets.map((pet, i) => (
+          {pets.map((pet) => (
             <PetCard
-              key={i}
+              key={pet.id}
               name={pet.name}
               breed={pet.breed}
               selected={draft.petId === pet.id}
@@ -132,7 +129,7 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
             type="button"
             className="p-4 lg:hidden rounded-xl border border-dashed border-slate-300 bg-slate-50 hover:bg-white hover:border-slate-400 transition-all text-sm font-medium text-slate-500"
           >
-            + Nueva mascota
+            {t('appointments.baseInfo.newPetBtn')}
           </button>
         </div>
       </div>
@@ -143,16 +140,16 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
           <div className="space-y-4">
 
 
-            <h2 className="text-sm font-medium text-slate-900">Sucursal</h2>
+            <h2 className="text-sm font-medium text-slate-900">{t('appointments.baseInfo.branchLabel')}</h2>
 
             <div className="grid gap-4">
               <div className="grid md:grid-cols-2 gap-4">
-                {hospitalBranches.map((branch: any) => (
+                {hospitalBranches.map((branch: { id: string, name: string, street?: string, exteriorNumber?: string }) => (
                   <BranchCard
                     key={branch.id}
                     id={branch.id}
                     name={branch.name}
-                    address={`${branch.street} ${branch.exteriorNumber}`}
+                    address={`${branch.street || ''} ${branch.exteriorNumber || ''}`.trim()}
                     status="open"
                     selected={draft.branchId === branch.id}
                     onSelect={() => handleBranchSelect(branch.id)}
@@ -165,19 +162,20 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
       </div>
 
 
+      {/* DESKTOP – BRANCH */}
       <div className="hidden lg:block space-y-4">
         <h2 className="text-sm font-medium text-slate-900">
-          Sucursal
+          {t('appointments.baseInfo.branchLabel')}
         </h2>
 
         <div className="grid md:grid-cols-2 gap-4">
           <div className="grid md:grid-cols-2 gap-4">
-            {hospitalBranches.map((branch: any) => (
+            {hospitalBranches.map((branch: { id: string, name: string, street?: string, exteriorNumber?: string }) => (
               <BranchCard
                 key={branch.id}
                 id={branch.id}
                 name={branch.name}
-                address={`${branch.street} ${branch.exteriorNumber}`}
+                address={`${branch.street || ''} ${branch.exteriorNumber || ''}`.trim()}
                 status="open"
                 selected={draft.branchId === branch.id}
                 onSelect={() => onChange({ branchId: branch.id })}
@@ -192,33 +190,33 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
         {mobileStage === "SERVICE" && (
           <div className="space-y-4">
             <h2 className="text-sm font-medium text-slate-900">
-              Tipo de servicio
+              {t('appointments.baseInfo.serviceLabel')}
             </h2>
 
             <div className="grid grid-cols-2 gap-3">
               <ServiceTypeCard
-                label="Consulta General"
+                label={t('appointments.baseInfo.services.CONSULTA')}
                 icon="stethoscope"
                 selected={draft.serviceType === "CONSULTA"}
                 onSelect={() => handleServiceSelect("CONSULTA")}
               />
 
               <ServiceTypeCard
-                label="Vacunación"
+                label={t('appointments.baseInfo.services.VACUNA')}
                 icon="syringe"
                 selected={draft.serviceType === "VACUNA"}
                 onSelect={() => handleServiceSelect("VACUNA")}
               />
 
               <ServiceTypeCard
-                label="Desparasitación"
+                label={t('appointments.baseInfo.services.OTRO')}
                 icon="pill"
                 selected={draft.serviceType === "OTRO"}
                 onSelect={() => handleServiceSelect("OTRO")}
               />
 
               <ServiceTypeCard
-                label="Revisión"
+                label={t('appointments.baseInfo.services.REVISION')}
                 icon="siren"
                 selected={draft.serviceType === "REVISION"}
                 onSelect={() => handleServiceSelect("REVISION")}
@@ -229,35 +227,36 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
       </div>
 
 
+      {/* DESKTOP – SERVICE */}
       <div className="hidden lg:block space-y-4">
         <h2 className="text-sm font-medium text-slate-900">
-          Tipo de servicio
+          {t('appointments.baseInfo.serviceLabel')}
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <ServiceTypeCard
-            label="Consulta General"
+            label={t('appointments.baseInfo.services.CONSULTA')}
             icon="stethoscope"
             selected={draft.serviceType === "CONSULTA"}
             onSelect={() => onChange({ serviceType: "CONSULTA" })}
           />
 
           <ServiceTypeCard
-            label="Vacunación"
+            label={t('appointments.baseInfo.services.VACUNA')}
             icon="syringe"
             selected={draft.serviceType === "VACUNA"}
             onSelect={() => onChange({ serviceType: "VACUNA" })}
           />
 
           <ServiceTypeCard
-            label="Desparasitación"
+            label={t('appointments.baseInfo.services.OTRO')}
             icon="pill"
             selected={draft.serviceType === "OTRO"}
             onSelect={() => onChange({ serviceType: "OTRO" })}
           />
 
           <ServiceTypeCard
-            label="Revisión"
+            label={t('appointments.baseInfo.services.REVISION')}
             icon="siren"
             selected={draft.serviceType === "REVISION"}
             onSelect={() => onChange({ serviceType: "REVISION" })}
@@ -273,7 +272,7 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
           className="text-sm text-slate-500 lg:hidden"
           variant="ghost"
         >
-          Atrás
+          {t('appointments.baseInfo.backBtn')}
         </Button>
       )}
       <div className="pt-6 border-t border-slate-100 flex justify-end hidden lg:block">
@@ -281,7 +280,7 @@ const StepBaseInfo = ({ draft, onChange, onNext, code }: StepBaseInfoProps) => {
           disabled={!canContinue}
           onClick={onNext}
         >
-          Continuar
+          {t('appointments.baseInfo.continueBtn')}
         </Button>
       </div>
 

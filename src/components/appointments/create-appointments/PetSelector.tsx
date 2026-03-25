@@ -3,7 +3,7 @@ import PetCard from "@/components/pets/PetCard"
 import { buildMeta } from "@/components/pets/PetsGrid"
 import useAxios from "@/hooks/useAxios"
 import { Pet, PetResponse } from "@/types/Pets"
-import { useState } from "react"
+import { useTranslation } from "react-i18next"
 
 type Props = {
     selectedPetId?: string
@@ -11,9 +11,9 @@ type Props = {
 }
 
 const PetSelector = ({ selectedPetId, onSelect }: Props) => {
+    const { t } = useTranslation('common')
     const { data, loading } = useAxios({ method: "get", url: "pets" })
     const pets = (data as PetResponse)?.data ?? []
-    const [selectedPetId2, setSelectedPetId] = useState<string | null>(null)
     if (loading) {
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -40,13 +40,13 @@ const PetSelector = ({ selectedPetId, onSelect }: Props) => {
                     <PetCard
                         id={pet.id}
                         name={pet.name}
-                        meta={buildMeta(pet)}
+                        meta={buildMeta(pet, t)}
                         lastVisit="—"
                         imageUrl={pet.photo}
                         statusColor={pet.isPrimaryOwner ? "emerald" : "amber"}
                         selectable
                         selected={selectedPetId === pet.id}
-                        onSelect={() => setSelectedPetId(pet.id)}
+                        onSelect={() => onSelect(pet)}
                     />
                 </button>
             ))}

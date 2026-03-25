@@ -1,7 +1,9 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 
 const Header = () => {
+  const { t } = useTranslation('common')
   const [solid, setSolid] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -46,17 +48,21 @@ const Header = () => {
           </div>
 
           <nav className="hidden md:flex items-center gap-10">
-            {["servicios", "nosotros", "contacto"].map((item) => (
+            {[
+              { id: 'servicios', key: 'services' },
+              { id: 'nosotros', key: 'about' },
+              { id: 'contacto', key: 'contact' }
+            ].map(({ id, key }) => (
               <a
-                key={item}
-                href={`#${item}`}
+                key={id}
+                href={`#${id}`}
                 className={`text-sm font-medium transition-colors ${
                   solid
                     ? "text-white/90 hover:text-white"
                     : "text-slate-600 hover:text-primary"
                 }`}
               >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
+                {t(`header.${key}`)}
               </a>
             ))}
           </nav>
@@ -70,20 +76,20 @@ const Header = () => {
                   : "text-slate-600 hover:text-primary"
               }`}
             >
-              Acceso
+              {t('header.login')}
             </Link>
             <Link
               href="/auth/signup"
               className="bg-primary text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-md transition-all active:scale-95"
             >
-              Registrarse
+              {t('header.signup')}
             </Link>
           </div>
 
           <button
             onClick={() => setOpen(!open)}
             className="md:hidden flex flex-col justify-center gap-1.5 z-50"
-            aria-label="Abrir menú"
+            aria-label={t('header.openMenu')}
           >
             <span
               className={`h-0.5 w-6 rounded bg-current transition-all ${
@@ -120,14 +126,18 @@ const Header = () => {
         `}
       >
         <div className="pt-10 pb-10 px-6 flex flex-col gap-6 text-center">
-          {["servicios", "nosotros", "contacto"].map((item) => (
+          {[
+            { id: 'servicios', key: 'services' },
+            { id: 'nosotros', key: 'about' },
+            { id: 'contacto', key: 'contact' }
+          ].map(({ id, key }) => (
             <a
-              key={item}
-              href={`#${item}`}
+              key={id}
+              href={`#${id}`}
               onClick={() => setOpen(false)}
               className="text-lg font-semibold text-slate-900 hover:text-primary transition-colors"
             >
-              {item.charAt(0).toUpperCase() + item.slice(1)}
+              {t(`header.${key}`)}
             </a>
           ))}
 
@@ -137,14 +147,14 @@ const Header = () => {
               onClick={() => setOpen(false)}
               className="text-slate-700 font-medium"
             >
-              Acceso
+              {t('header.login')}
             </Link>
             <Link
               href="/auth/signup"
               onClick={() => setOpen(false)}
               className="bg-primary text-white py-3 rounded-xl font-bold shadow-md"
             >
-              Registrarse
+              {t('header.signup')}
             </Link>
           </div>
         </div>

@@ -1,4 +1,6 @@
 import { Icon } from "@iconify/react"
+import { useTranslation } from "react-i18next"
+import Image from "next/image"
 
 type Veterinarian = {
   id: string
@@ -18,12 +20,13 @@ const VeterinarianSelector = ({
   selectedVetId,
   onSelect,
 }: VeterinarianSelectorProps) => {
+  const { t } = useTranslation('common')
   const isAnySelected = selectedVetId === undefined
 
   return (
     <div className="space-y-4">
       <h3 className="text-sm font-medium text-slate-900">
-        Veterinario
+        {t('appointments.schedule.vet.title')}
       </h3>
 
       <div className="grid md:grid-cols-2 gap-4">
@@ -44,10 +47,10 @@ const VeterinarianSelector = ({
 
           <div>
             <div className="font-medium text-slate-900">
-              Cualquiera disponible
+              {t('appointments.schedule.vet.any')}
             </div>
             <div className="text-xs text-slate-500">
-              El primero que esté libre
+              {t('appointments.schedule.vet.anyDescription')}
             </div>
           </div>
 
@@ -80,11 +83,15 @@ const VeterinarianSelector = ({
               ].join(" ")}
             >
               {vet.avatarUrl ? (
-                <img
-                  src={vet.avatarUrl}
-                  alt={vet.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
+                <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
+                  <Image
+                    src={vet.avatarUrl}
+                    alt={vet.name}
+                    width={48}
+                    height={48}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               ) : (
                 <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
                   <Icon icon="lucide:user" width={18} />

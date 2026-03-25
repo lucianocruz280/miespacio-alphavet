@@ -1,0 +1,330 @@
+{
+  "header": {
+    "services": "Servicios",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "login": "Acceso",
+    "signup": "Registrarse",
+    "openMenu": "Abrir menú"
+  },
+  "auth": {
+    "login": {
+      "errors": {
+        "smsRequired": "Debes aceptar recibir SMS para continuar",
+        "invalidCreds": "Credenciales inválidas",
+        "invalidInput": "Ingresa un email o teléfono válido",
+        "generalError": "Ocurrió un error",
+        "invalidCode": "Código incorrecto"
+      },
+      "quote": "“Cuidamos a quienes más amas con la mejor tecnología y el cariño que merecen.”",
+      "happyOwners": "Más de 2,000 dueños felices",
+      "title": "Iniciar sesión",
+      "subtitle": "Accede a tu cuenta AlphaVet",
+      "identifierLabel": "Email o Teléfono",
+      "identifierPlaceholder": "correo o 6691234567",
+      "smsConsent": "Acepto recibir mensajes SMS para autenticación y notificaciones de AlphaVet. Pueden aplicarse cargos de mi operador.",
+      "passwordLabel": "Contraseña",
+      "continueBtn": "Continuar",
+      "smsCodeLabel": "Código SMS",
+      "verifyCodeBtn": "Verificar código",
+      "noAccount": "¿No tienes cuenta?",
+      "createAccount": "Crear cuenta"
+    },
+    "signup": {
+      "errors": {
+        "nameRequired": "Ingresa tu nombre",
+        "invalidEmail": "Ingresa un email válido",
+        "passwordMinLength": "La contraseña debe tener al menos 8 caracteres",
+        "passwordsDontMatch": "Las contraseñas no coinciden",
+        "termsRequired": "Debes aceptar los términos y condiciones",
+        "emailExists": "Este email ya está registrado",
+        "phoneExists": "Este teléfono ya está registrado",
+        "registerError": "Error al registrar usuario",
+        "unexpectedError": "Error inesperado"
+      },
+      "quote": "“Crea tu cuenta y lleva el historial, vacunas y citas de tu mascota en un solo lugar.”",
+      "happyOwners": "Más de 2,000 dueños felices",
+      "title": "Crear cuenta",
+      "subtitle": "Regístrate para gestionar tus mascotas, historial y citas.",
+      "nameLabel": "Nombre completo",
+      "namePlaceholder": "Juan Pérez",
+      "emailLabel": "Email",
+      "emailPlaceholder": "usuario@alphavet.com",
+      "phoneLabel": "Teléfono (opcional)",
+      "phonePlaceholder": "6691234567",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "••••••••",
+      "passwordHint": "Mínimo 8 caracteres",
+      "confirmPasswordLabel": "Confirmar contraseña",
+      "termsLabel": "Acepto los términos y condiciones",
+      "submitBtn": "Crear cuenta",
+      "hasAccount": "¿Ya tienes cuenta?",
+      "loginBtn": "Inicia sesión"
+    },
+    "recovery": {
+      "errors": {
+        "invalidInput": "Ingresa un email o teléfono válido",
+        "userNotFound": "Usuario no encontrado",
+        "invalidCode": "Código incorrecto",
+        "updateFailed": "No se pudo actualizar la contraseña"
+      },
+      "title": "Activar cuenta",
+      "subtitle": "Ingresa tu email o teléfono",
+      "resendCodeIn": "Reenviar código en {{cooldown}}s",
+      "resendCode": "Reenviar código",
+      "newPasswordLabel": "Nueva contraseña",
+      "createPasswordBtn": "Crear contraseña"
+    }
+  },
+  "appointments": {
+    "header": {
+      "title": "Nueva Cita",
+      "subtitle": "Información básica > Horario > Pago",
+      "stepper": {
+        "baseInfo": "Información Básica",
+        "schedule": "Horario",
+        "extras": "Extras",
+        "payment": "Pago"
+      }
+    },
+    "loading": "Cargando...",
+    "stepProgress": "Paso {{current}} de {{total}}",
+    "steps": {
+      "base": "Información básica",
+      "schedule": "Fecha y hora",
+      "extras": "Extras",
+      "payment": "Pago"
+    },
+    "baseInfo": {
+      "newPetBtn": "+ Nueva mascota",
+      "title": "Comencemos",
+      "subtitle": "Selecciona la mascota, la sucursal y el tipo de servicio.",
+      "petLabel": "Mascota",
+      "branchLabel": "Sucursal",
+      "serviceLabel": "Tipo de servicio",
+      "services": {
+        "CONSULTA": "Consulta General",
+        "VACUNA": "Vacunación",
+        "OTRO": "Desparasitación",
+        "REVISION": "Revisión"
+      },
+      "backBtn": "Atrás",
+      "continueBtn": "Continuar"
+    },
+    "schedule": {
+      "title": "Fecha y horario",
+      "subtitle": "Elige el día y la hora que mejor te convenga.",
+      "dateLabel": "Fecha",
+      "timeLabel": "Horario",
+      "editBtn": "Editar",
+      "backBtn": "Atrás",
+      "continueBtn": "Continuar",
+      "days": ["LU", "MA", "MI", "JU", "VI", "SA", "DO"],
+      "timeSlot": {
+        "loading": "Cargando horarios…",
+        "empty": "No hay horarios disponibles para este día",
+        "title": "Horarios disponibles"
+      },
+      "vet": {
+        "title": "Veterinario",
+        "any": "Cualquiera disponible",
+        "anyDescription": "El primero que esté libre"
+      }
+    },
+    "extrasStep": {
+      "title": "Extras",
+      "subtitle": "Agrega un código promocional o notas para el veterinario.",
+      "promoCode": "Código promocional",
+      "promoPlaceholder": "Ej. BIENVENIDA10",
+      "applyBtn": "Aplicar",
+      "notes": "Notas adicionales (opcional)",
+      "notesPlaceholder": "¿Algo que debamos saber sobre tu mascota?",
+      "backBtn": "Atrás",
+      "continueBtn": "Continuar"
+    },
+    "paymentStep": {
+      "title": "Pago y Confirmación",
+      "subtitle": "Selecciona cómo deseas pagar tu cita.",
+      "methodLabel": "Método de pago",
+      "methods": {
+        "clinic": {
+          "title": "Pagar en clínica",
+          "subtitle": "Efectivo o tarjeta al llegar"
+        }
+      },
+      "backBtn": "Atrás",
+      "confirmingBtn": "Confirmando...",
+      "confirmBtn": "Confirmar cita"
+    },
+    "clinicConfirmation": {
+      "title": "¡Cita confirmada!",
+      "subtitle": "El pago se realizará directamente en la clínica.",
+      "petLabel": "Mascota",
+      "serviceLabel": "Servicio",
+      "branchLabel": "Sucursal",
+      "dateLabel": "Fecha",
+      "timeLabel": "Hora",
+      "vetLabel": "Veterinario",
+      "anyVet": "Cualquiera disponible",
+      "reminderText": "Te enviaremos un recordatorio antes de tu cita.",
+      "viewAppointmentsBtn": "Ver mis citas"
+    }
+  },
+  "pets": {
+    "addPetCard": {
+      "title": "Agregar nueva mascota",
+      "subtitle": "Registrar nuevo perfil"
+    },
+    "petCard": {
+      "lastVisit": "Última visita: {{date}}"
+    },
+    "petsGrid": {
+      "yearsOld": "{{count}} años"
+    },
+    "createView": {
+      "title": "Agregar mascota",
+      "subtitle": "Registra a tu mascota para agendar citas, guardar historial y recibir recordatorios.",
+      "clientPortal": "Portal de clientes",
+      "photoSection": {
+        "title": "Foto de tu mascota",
+        "subtitle": "Opcional, puedes subirla después.",
+        "uploading": "Subiendo..."
+      },
+      "basicInfo": {
+        "title": "Información básica",
+        "nameLabel": "Nombre",
+        "namePlaceholder": "Ej. Bruno",
+        "speciesLabel": "Especie",
+        "breedLabel": "Raza",
+        "genderLabel": "Sexo",
+        "ageLabel": "Edad (años)",
+        "agePlaceholder": "Ej. 2",
+        "weightLabel": "Peso (kg)",
+        "weightPlaceholder": "Ej. 12.5"
+      },
+      "additionalDetails": {
+        "title": "Detalles adicionales",
+        "colorLabel": "Color / señas particulares",
+        "microchipLabel": "ID de microchip",
+        "microchipPlaceholder": "Si no cuenta con microchip, no escribir nada",
+        "notesLabel": "Notas"
+      },
+      "actions": {
+        "editLaterMsg": "Puedes editar estos datos después desde el perfil de la mascota.",
+        "cancelBtn": "Cancelar",
+        "saveBtn": "Guardar mascota",
+        "savingBtn": "Guardando..."
+      },
+      "errors": {
+        "nameRequired": "El nombre es obligatorio",
+        "speciesRequired": "Selecciona una especie",
+        "breedRequired": "Selecciona una raza",
+        "genderRequired": "Por favor, selecciona un género",
+        "saveError": "Error al guardar la mascota"
+      },
+      "genderOptions": {
+        "select": "Selecciona...",
+        "male": "Macho",
+        "female": "Hembra"
+      }
+    },
+    "detail": {
+      "header": {
+        "species": {
+          "dog": "Canino",
+          "cat": "Felino",
+          "bird": "Ave",
+          "rabbit": "Conejo",
+          "rodent": "Roedor",
+          "fish": "Pez",
+          "reptile": "Reptil",
+          "other": "Mascota"
+        },
+        "scheduleBtn": "Agendar cita",
+        "editBtn": "Editar perfil"
+      },
+      "infoCard": {
+        "title": "Información de la mascota"
+      },
+      "medicalSummary": {
+        "title": "Estado de salud",
+        "vaccines": {
+          "title": "Vacunas",
+          "noRecord": "Sin registro",
+          "upToDate": "Al día",
+          "pending": "Pendientes"
+        },
+        "lastVisit": {
+          "title": "Última visita",
+          "noVisit": "Sin visitas registradas"
+        },
+        "allergies": {
+          "title": "Alergias",
+          "noAllergies": "Sin alergias registradas"
+        },
+        "notes": {
+          "title": "Notas"
+        }
+      },
+      "history": {
+        "title": "Historial reciente",
+        "viewAll": "Ver historial completo"
+      }
+    }
+  },
+  "services": {
+    "detail": {
+      "title": "Detalle del Servicio",
+      "completed": "Completado",
+      "types": {
+        "grooming": "Servicio de Estética",
+        "medical": "Consulta Médica"
+      },
+      "pet": "Mascota",
+      "mainBranch": "Sucursal Principal",
+      "attendedBy": "Atendido por",
+      "notes": {
+        "groomingTitle": "Notas del Servicio",
+        "medicalTitle": "Motivo de la Consulta",
+        "empty": "Sin notas adicionales."
+      },
+      "diagnosis": "Diagnóstico",
+      "treatment": "Tratamiento",
+      "followUp": "Seguimiento Recomendado",
+      "prescriptions": {
+        "title": "Recetas Médicas",
+        "dose": "Dosis",
+        "frequency": "Frecuencia",
+        "everyXHours": "Cada {{hours}} horas",
+        "duration": "Duración",
+        "xDias": "{{days}} días"
+      },
+      "items": {
+        "title": "Servicios/Productos Aplicados",
+        "concept": "Concepto",
+        "quantity": "Cantidad",
+        "defaultService": "Servicio"
+      }
+    },
+    "card": {
+      "duration": "Duración",
+      "from": "desde"
+    },
+    "list": {
+      "empty": {
+        "title": "No hay servicios recientes",
+        "description": "Aquí aparecerá el historial de consultas médicas y estética de tus mascotas."
+      },
+      "types": {
+        "spaDay": "Día de Spa",
+        "medical": "Consulta Médica"
+      },
+      "for": "para",
+      "categories": {
+        "grooming": "Estética",
+        "general": "Consulta General"
+      },
+      "completed": "Completado"
+    }
+  }
+}

@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useState } from "react"
 import { formatISO, todayISO } from "@/lib/dates"
+import { useTranslation } from "react-i18next"
 
 type CalendarSelectorProps = {
   selectedDate?: string
   onSelect: (date: string) => void
 }
 
-const DAYS = ["LU", "MA", "MI", "JU", "VI", "SA", "DO"]
-
 const CalendarSelector = ({ selectedDate, onSelect }: CalendarSelectorProps) => {
+  const { t, i18n } = useTranslation('common')
+  const days = t('appointments.schedule.days', { returnObjects: true }) as string[]
   const today = todayISO()
 
   const [currentMonth, setCurrentMonth] = useState(() => {
@@ -62,7 +63,7 @@ const CalendarSelector = ({ selectedDate, onSelect }: CalendarSelectorProps) => 
     return cells
   }, [currentMonth, today])
 
-  const monthLabel = currentMonth.toLocaleDateString("es-MX", {
+  const monthLabel = currentMonth.toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'es-MX', {
     month: "long",
     year: "numeric",
   })
@@ -110,7 +111,7 @@ const CalendarSelector = ({ selectedDate, onSelect }: CalendarSelectorProps) => 
       </div>
 
       <div className="grid grid-cols-7 gap-1 text-center text-sm mb-2">
-        {DAYS.map((d) => (
+        {days.map((d) => (
           <span key={d} className="text-xs text-slate-400 font-medium py-2">
             {d}
           </span>
