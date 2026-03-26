@@ -9,12 +9,20 @@ export default withAuth(
 
     if ((req as any).nextauth?.token && url.pathname === "/") {
       url.pathname = "/home"
-      return NextResponse.rewrite(url)
+      return NextResponse.redirect(url)
     }
 
     return NextResponse.next()
   },
   {
+    callbacks: {
+      authorized: ({ req, token }) => {
+        if (req.nextUrl.pathname === "/") {
+          return true
+        }
+        return !!token
+      },
+    },
     pages: {
       signIn: "/auth/signin",
     },
