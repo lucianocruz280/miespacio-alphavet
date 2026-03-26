@@ -141,9 +141,9 @@ const LoginPage = () => {
 
       <div className="w-full lg:w-1/2 h-full flex items-center justify-center p-8">
         <div className="w-full max-w-sm">
-           <div className="flex items-center gap-2 mb-14 mt-4 text-slate-900 h-10">
+          <a href="/" className="flex items-center gap-2 mb-14 mt-4 text-slate-900 h-10">
             <img src="/images/logo.png" />
-          </div>
+          </a>
           <div className="mb-8">
             <h1 className="text-2xl font-semibold tracking-tight">
               {t('auth.login.title')}
@@ -199,7 +199,7 @@ const LoginPage = () => {
                         className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 focus:outline-none"
                         tabIndex={-1}
                       >
-                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
                     </div>
                   </Field>
@@ -251,6 +251,13 @@ const LoginPage = () => {
               {t('auth.login.createAccount')}
             </Link>
           </p>
+
+          <a href="/" >
+            <p className="mt-2 text-center text-sm text-blue-500">
+              Regresar a Inicio
+            </p>
+
+          </a>
 
         </div>
       </div>

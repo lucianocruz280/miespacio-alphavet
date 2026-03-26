@@ -167,9 +167,9 @@ const SignupPage = () => {
 
         <div className="w-full max-w-sm">
 
-          <div className="flex items-center gap-2 mb-14 mt-4 text-slate-900 h-10">
+          <a href='/' className="flex items-center gap-2 mb-14 mt-4 text-slate-900 h-10">
             <img src="/images/logo.png" />
-          </div>
+          </a>
 
           <div className="mb-8">
             <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
@@ -317,6 +317,12 @@ const SignupPage = () => {
             </Link>
           </p>
 
+          <a href="/" >
+            <p className="mt-2 text-center text-sm text-blue-500">
+              Regresar a Inicio
+            </p>
+
+          </a>
         </div>
 
       </div>
