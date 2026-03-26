@@ -35,16 +35,15 @@ const Header = () => {
       >
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold shadow-lg shadow-primary-800">
-              <span className="text-xl">A</span>
-            </div>
-            <span
+
+            {/* <span
               className={`text-2xl font-bold tracking-tight transition-colors ${
                 solid ? "text-white" : "text-slate-900"
               }`}
             >
               Alpha<span className="text-primary">vet</span>
-            </span>
+            </span> */}
+            <img src="images/logo.png" className="w-40" alt="Logo" />
           </div>
 
           <nav className="hidden md:flex items-center gap-10">
@@ -56,11 +55,10 @@ const Header = () => {
               <a
                 key={id}
                 href={`#${id}`}
-                className={`text-sm font-medium transition-colors ${
-                  solid
-                    ? "text-white/90 hover:text-white"
-                    : "text-slate-600 hover:text-primary"
-                }`}
+                className={`text-sm font-medium transition-colors ${solid
+                  ? "text-white/90 hover:text-white"
+                  : "text-slate-600 hover:text-primary"
+                  }`}
               >
                 {t(`header.${key}`)}
               </a>
@@ -70,11 +68,10 @@ const Header = () => {
           <div className="hidden md:flex items-center gap-4">
             <Link
               href="/auth/signin"
-              className={`text-sm font-medium transition-colors ${
-                solid
-                  ? "text-white/90 hover:text-white"
-                  : "text-slate-600 hover:text-primary"
-              }`}
+              className={`text-sm font-medium transition-colors ${solid
+                ? "text-white/90 hover:text-white"
+                : "text-slate-600 hover:text-primary"
+                }`}
             >
               {t('header.login')}
             </Link>
@@ -92,19 +89,16 @@ const Header = () => {
             aria-label={t('header.openMenu')}
           >
             <span
-              className={`h-0.5 w-6 rounded bg-current transition-all ${
-                open ? "rotate-45 translate-y-2" : ""
-              } ${solid ? "text-white" : "text-slate-900"}`}
+              className={`h-0.5 w-6 rounded bg-current transition-all ${open ? "rotate-45 translate-y-2" : ""
+                } ${solid ? "text-white" : "text-slate-900"}`}
             />
             <span
-              className={`h-0.5 w-6 rounded bg-current transition-all ${
-                open ? "opacity-0" : ""
-              } ${solid ? "text-white" : "text-slate-900"}`}
+              className={`h-0.5 w-6 rounded bg-current transition-all ${open ? "opacity-0" : ""
+                } ${solid ? "text-white" : "text-slate-900"}`}
             />
             <span
-              className={`h-0.5 w-6 rounded bg-current transition-all ${
-                open ? "-rotate-45 -translate-y-2" : ""
-              } ${solid ? "text-white" : "text-slate-900"}`}
+              className={`h-0.5 w-6 rounded bg-current transition-all ${open ? "-rotate-45 -translate-y-2" : ""
+                } ${solid ? "text-white" : "text-slate-900"}`}
             />
           </button>
         </div>
