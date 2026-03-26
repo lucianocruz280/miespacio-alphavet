@@ -3,9 +3,12 @@ import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 const Header = () => {
-  const { t } = useTranslation('common')
+  const { t, i18n } = useTranslation('common')
   const [solid, setSolid] = useState(false)
   const [open, setOpen] = useState(false)
+  const changeLang = (lng: string) => {
+    i18n.changeLanguage(lng)
+  }
 
   useEffect(() => {
     const section = document.getElementById("hero")
@@ -24,7 +27,8 @@ const Header = () => {
     observer.observe(section)
     return () => observer.disconnect()
   }, [])
-
+  const solidClasses = "bg-white text-slate-800 border-slate-300"
+  const transparentClasses = "bg-transparent text-white border-white/40 backdrop-blur-md"
   return (
     <>
       <header
@@ -66,6 +70,20 @@ const Header = () => {
           </nav>
 
           <div className="hidden md:flex items-center gap-4">
+            <select
+              onChange={(e) => changeLang(e.target.value)}
+              value={i18n.language}
+              style={{
+                backgroundColor: solid ? "transparent" : "#ffffff",
+                color: solid ? "#ffffff" : "#1e293b",
+                border: solid ? "1px solid rgba(255,255,255,0.4)" : "1px solid #cbd5f5",
+                backdropFilter: solid ? "blur(8px)" : "none",
+              }}
+              className="text-sm px-2 py-1 rounded-md transition-all"
+            >
+              <option value="es" className="text-black">ES</option>
+              <option value="en" className="text-black">EN</option>
+            </select>
             <Link
               href="/auth/signin"
               className={`text-sm font-medium transition-colors ${solid

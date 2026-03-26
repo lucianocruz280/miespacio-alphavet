@@ -2,16 +2,24 @@ import { ChevronDown, LogOut, Search } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import { useTranslation } from "react-i18next"
 
 export default function Header() {
     const { data: session, status } = useSession()
     const [open, setOpen] = useState(false)
+
+    const { i18n } = useTranslation()
+
+    const changeLang = (lng: string) => {
+        i18n.changeLanguage(lng)
+    }
+
     return (
         <header className="sticky top-0 z-50 bg-white border-b border-slate-200/80">
-
+          
             <div className="max-w-[1600px] mx-auto px-4 lg:px-6 h-16 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 shrink-0">
-                   
+
                     <div className="flex items-center gap-2">
                         <Link href="/" className="text-slate-900 font-medium text-lg">
                             <img src="/images/logo.png" alt="" className="w-30" />
@@ -36,7 +44,14 @@ export default function Header() {
 
                 {/* Actions */}
                 <div className="flex items-center gap-3 relative">
-
+                    <select
+                        value={i18n.language}
+                        onChange={(e) => changeLang(e.target.value)}
+                        className="border rounded px-2 py-1"
+                    >
+                        <option value="es">ES</option>
+                        <option value="en">EN</option>
+                    </select>
                     {status === 'loading' && (
                         <div className="h-9 w-24 bg-slate-100 animate-pulse rounded-lg" />
                     )}

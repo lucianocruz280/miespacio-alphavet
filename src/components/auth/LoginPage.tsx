@@ -12,9 +12,12 @@ import Button from "@/components/ui/Button"
 import { signIn } from "next-auth/react"
 
 const LoginPage = () => {
-  const { t } = useTranslation('common')
+  const { t, i18n } = useTranslation('common')
   const router = useRouter()
 
+  const changeLang = (lng: string) => {
+    i18n.changeLanguage(lng)
+  }
   const [identifier, setIdentifier] = useState("")
   const [password, setPassword] = useState("")
   const [otp, setOtp] = useState("")
@@ -122,8 +125,17 @@ const LoginPage = () => {
 
   }
   return (
-    <main className="h-screen w-full flex overflow-hidden bg-white">
-
+    <main className="h-screen w-full flex overflow-hidden bg-white relative">
+      <div className="absolute top-10 right-10">
+        <select
+          value={i18n.language}
+          onChange={(e) => changeLang(e.target.value)}
+          className="border rounded px-2 py-1"
+        >
+          <option value="es">ES</option>
+          <option value="en">EN</option>
+        </select>
+      </div>
       <div className="hidden lg:block relative w-1/2 h-full bg-slate-900">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=2069&auto=format&fit=crop')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />

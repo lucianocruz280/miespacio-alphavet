@@ -1,4 +1,3 @@
-import { serverSideTranslations } from 'next-i18next/pages/serverSideTranslations'
 
 const Page = () => {
     return (
@@ -6,10 +5,4 @@ const Page = () => {
     )
 }
 
-export const getStaticProps = async ({ locale }: { locale: string }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? 'es', ['common'])),
-  },
-})
-
-export default Page
+export default Page

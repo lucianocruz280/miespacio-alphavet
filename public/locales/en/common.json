@@ -21,7 +21,7 @@
       "title": "Sign in",
       "subtitle": "Access your AlphaVet account",
       "identifierLabel": "Email or Phone",
-      "identifierPlaceholder": "email or 6691234567",
+      "identifierPlaceholder": "email or Phone",
       "smsConsent": "I agree to receive SMS messages for authentication and notifications from AlphaVet. Carrier charges may apply.",
       "passwordLabel": "Password",
       "continueBtn": "Continue",

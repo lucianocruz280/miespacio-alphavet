@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
+import "@/lib/i18n"; // 👈 esto inicializa i18n
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
-import { appWithTranslation } from "next-i18next/pages";
 
 function App({
   Component,
@@ -11,7 +11,7 @@ function App({
     <SessionProvider session={session}>
       <Component {...pageProps} />
     </SessionProvider>
-  )
+  );
 }
 
-export default appWithTranslation(App);
+export default App;

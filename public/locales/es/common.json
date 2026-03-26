@@ -21,7 +21,7 @@
       "title": "Iniciar sesión",
       "subtitle": "Accede a tu cuenta AlphaVet",
       "identifierLabel": "Email o Teléfono",
-      "identifierPlaceholder": "correo o 6691234567",
+      "identifierPlaceholder": "correo o Teléfono",
       "smsConsent": "Acepto recibir mensajes SMS para autenticación y notificaciones de AlphaVet. Pueden aplicarse cargos de mi operador.",
       "passwordLabel": "Contraseña",
       "continueBtn": "Continuar",
