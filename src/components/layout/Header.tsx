@@ -3,10 +3,15 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { useTranslation } from "react-i18next"
+import { useCartStore } from "@/store/useCartStore";
+import { Icon } from "@iconify/react";
+import CartDrawer from "../shop/CartDrawer";
 
 export default function Header() {
     const { data: session, status } = useSession()
     const [open, setOpen] = useState(false)
+    const [cartOpen, setCartOpen] = useState(false)
+    const cartItems = useCartStore((state) => state.items)
 
     const { i18n } = useTranslation()
 
@@ -44,6 +49,20 @@ export default function Header() {
 
                 {/* Actions */}
                 <div className="flex items-center gap-3 relative">
+                    <button 
+                        onClick={() => setCartOpen(true)}
+                        className="relative p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-slate-600 hover:text-blue-600 hover:bg-white hover:shadow-sm transition-all group"
+                    >
+                        <Icon icon="solar:cart-large-2-linear" className="w-5 h-5" />
+                        {cartItems.length > 0 && (
+                            <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-blue-600 text-white text-[10px] font-bold rounded-full border-2 border-white flex items-center justify-center animate-in zoom-in">
+                                {cartItems.length}
+                            </span>
+                        )}
+                    </button>
+
+                    <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+
                     <select
                         value={i18n.language}
                         onChange={(e) => changeLang(e.target.value)}
