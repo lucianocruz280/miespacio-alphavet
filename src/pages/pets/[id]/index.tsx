@@ -104,6 +104,27 @@ const Page = () => {
 
                 </div>
 
+                {/* Expediente Clínico Link */}
+                <div
+                    onClick={() => router.push(`/pets/${id}/expediente`)}
+                    className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center justify-between hover:border-primary-300 hover:shadow-md transition-all cursor-pointer group"
+                >
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center group-hover:bg-primary-100 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 className="font-bold text-slate-900 text-base">Expediente Clínico</h3>
+                            <p className="text-sm text-slate-500">Historial completo de consultas, diagnósticos y análisis</p>
+                        </div>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-slate-300 group-hover:text-primary-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+
                 <PetHistoryPreview items={historyInfo.history.map(item => ({
                     ...item,
                     href: `/my-services/${item.id}?category=${item.category}`
