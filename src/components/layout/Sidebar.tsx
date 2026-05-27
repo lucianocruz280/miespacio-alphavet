@@ -10,7 +10,7 @@ const Sidebar = () => {
             {/* <SidebarSummary /> */}
             <SidebarNavigation />
             {/* <SidebarPromotions /> */}
-            {/* <SidebarPackages /> */}
+         {/*   <SidebarPackages /> */}
             <SidebarSupport />
         </aside>
     )
