@@ -326,5 +326,9 @@
       },
       "completed": "Completado"
     }
+  },
+  "seo": {
+    "title": "AlphaVet - Centro Médico Veterinario",
+    "description": "Cuidamos a quienes más amas con la mejor tecnología, profesionales especializados y el cariño que merecen. Reserva tu cita en línea, gestiona el historial médico de tus mascotas, vacunas y más."
   }
 }
