@@ -25,8 +25,21 @@ export default function SEO({
   const siteTitle = title || t("seo.title") || "AlphaVet - Centro Médico Veterinario";
   const siteDescription = description || t("seo.description") || "Cuidamos a quienes más amas con la mejor tecnología, profesionales especializados y el cariño que merecen.";
   
-  // Construct absolute URL for the preview image if possible, or fallback to relative/absolute path
-  const defaultBaseUrl = typeof window !== "undefined" ? window.location.origin : "https://alphavet.com";
+  // Resolve the domain dynamically for crawlers (like WhatsApp) that require absolute URLs
+  const getBaseUrl = () => {
+    if (process.env.NEXT_PUBLIC_SITE_URL) {
+      return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
+    }
+    if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+      return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+    }
+    if (typeof window !== "undefined") {
+      return window.location.origin;
+    }
+    return "https://alphavet.com"; // Default fallback
+  };
+
+  const defaultBaseUrl = getBaseUrl();
   const absoluteImageUrl = image.startsWith("http") ? image : `${defaultBaseUrl}${image}`;
   const absolutePageUrl = url || (typeof window !== "undefined" ? window.location.href : `${defaultBaseUrl}${router.asPath}`);
 
